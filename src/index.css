@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Quicksand:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-hand: "Caveat", cursive;
+  --font-sans: "Quicksand", system-ui, sans-serif;
+
+  --color-cream: #fae1db;
+  --color-blush: #fce7ee;
+  --color-blush-deep: #f9d5e5;
+  --color-pink: #ec4899;
+  --color-pink-deep: #be185d;
+  --color-pink-soft: #fbcfe8;
+  --color-mint: #bff0d3;
+  --color-mint-deep: #16a34a;
+  --color-lavender: #ddd6fe;
+  --color-lavender-deep: #7c3aed;
+  --color-butter: #fde68a;
+  --color-butter-deep: #ca8a04;
+  --color-ink: #3a2e2e;
+  --color-ink-soft: #8a7b7b;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: var(--color-cream);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  section {
+    scroll-margin-top: 92px;
+  }
+}
+
+@layer utilities {
+  .font-hand {
+    font-family: var(--font-hand);
+  }
+}
+
+/* Ambient floating stationery icons */
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) rotate(var(--rot-start, 0deg));
+  }
+  50% {
+    transform: translate(var(--drift-x, 12px), var(--drift-y, -18px)) rotate(var(--rot-mid, 6deg));
+  }
+  100% {
+    transform: translate(0, 0) rotate(var(--rot-start, 0deg));
+  }
+}
+
+.floating-icon {
+  animation: drift var(--dur, 7s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform;
+}
+
+@keyframes tape-flutter {
+  0%,
+  100% {
+    transform: rotate(var(--rot, -4deg));
+  }
+  50% {
+    transform: rotate(calc(var(--rot, -4deg) + 1.5deg));
+  }
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hand-drawn wavy underline, drawn on scroll/hover via stroke-dashoffset */
+.wavy-underline path {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: draw-underline 1s ease-out forwards;
+}
+
+@keyframes draw-underline {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Soft paper drop-shadow reused across cards, tabs, notes */
+.paper-shadow {
+  filter: drop-shadow(0 10px 20px rgba(58, 46, 46, 0.12));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .floating-icon {
+    animation: none !important;
+  }
+  .wavy-underline path {
+    animation: none !important;
+    stroke-dashoffset: 0;
+  }
+}
