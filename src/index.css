@@ -108,3 +108,33 @@
     stroke-dashoffset: 0;
   }
 }
+
+.shine-text {
+  background-image: linear-gradient(
+    100deg,
+    #ec4899 30%,
+    #ec4899 42%,
+    #ffe3ef 50%,
+    #ec4899 58%,
+    #ec4899 100%
+  );
+  background-size: 250% 100%;
+  background-position: 160% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shine-sweep 4s ease-in-out infinite;
+}
+
+@keyframes shine-sweep {
+  0% { background-position: 160% 0; }
+  100% { background-position: -60% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shine-text {
+    animation: none;
+    background-position: 0% 0;
+  }
+}

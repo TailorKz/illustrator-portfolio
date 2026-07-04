@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 
 const projects = [
-  { id: 1, title: "Florescer Studio", category: "Branding", year: "2024", color: "bg-pink-100", pin: true },
-  { id: 2, title: "Revista Verse", category: "Editorial Design", year: "2024", color: "bg-purple-100", tape: true },
-  { id: 3, title: "Chá de Folhas", category: "Packaging", year: "2024", color: "bg-green-100", clip: true },
-  { id: 4, title: "Daily & Co.", category: "Social Media", year: "2024", color: "bg-blue-100", tape: true },
+  { id: 1, title: "Image", category: "Branding", year: "2026", color: "bg-pink-100", pin: true },
+  { id: 2, title: "Image", category: "Autoral Design", year: "2026", color: "bg-purple-100", tape: true },
+  { id: 3, title: "Image", category: "Scenario", year: "2025", color: "bg-green-100", clip: true },
+  { id: 4, title: "Image", category: "Autoral Design", year: "2024", color: "bg-blue-100", tape: true },
 ];
 
 export function ProjectsSection() {
@@ -30,7 +30,7 @@ export function ProjectsSection() {
           className="text-right mt-4 md:mt-0"
         >
           <p className="font-sans text-gray-500 max-w-xs text-sm mb-4">
-            Uma seleção dos meus trabalhos mais recentes. Cada projeto conta uma história única.
+            text
           </p>
           <button className="text-pink-500 font-bold text-sm tracking-widest border border-pink-200 py-2 px-6 rounded-full hover:bg-pink-50 transition-colors">
             VER TODOS <span className="ml-2">↓</span>
