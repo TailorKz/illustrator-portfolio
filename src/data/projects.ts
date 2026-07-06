@@ -2,10 +2,17 @@
 
 export type ProjectAspect = "square" | "portrait" | "tall" | "wide";
 export type ProjectDecoration = "tape" | "pin" | "clip" | "none";
-import redragon from "C:/Users/INDACI/Desktop/Tailor/redragon_arte.png"
-import sask from "C:/Users/INDACI/Desktop/Tailor/sask_comission.png"
-import obito from "C:/Users/INDACI/Desktop/Tailor/obito_rin.jpg.jpeg"
-import hiksemi from "C:/Users/INDACI/Desktop/Tailor/redragon_hiksemi.png"
+import redragon from "../assets/redragon_artev2.png";
+import aniver from "../assets/20sbirthday.png";
+import hades from "../assets/hades(1).png";
+import obito from "../assets/obito_rin (1).png";
+import bro from "../assets/1000173942.png";
+import ruko from "../assets/comission_rukoreiko.png";
+import sandy from "../assets/sandy_thumbnail-art-scale-4_00x-gigapixel.png";
+import gabialice from "../assets/gabialice.png";
+import mossgroto from "../assets/mossgroto.png";
+
+
 export type Project = {
   id: string;
   title: string;
@@ -52,8 +59,8 @@ export const projects: Project[] = [
     tags: ["Comission", "Anime"],
     decoration: "pin",
     accent: "from-butter to-butter-deep",
-    aspect: "square",
-    image: sask,
+    aspect: "tall",
+    image: hades,
   },
   {
     id: "Obito-Rin",
@@ -75,7 +82,7 @@ export const projects: Project[] = [
     decoration: "tape",
     accent: "from-blush to-blush-deep",
     aspect: "square",
-    image: hiksemi,
+    image: aniver,
   },
   {
     id: "papelaria-criativa",
@@ -85,7 +92,8 @@ export const projects: Project[] = [
     tags: [ "Criativa"],
     decoration: "pin",
     accent: "from-pink-soft to-pink-deep",
-    aspect: "square",
+    aspect: "tall",
+    image: gabialice,
   },
   {
     id: "mundo-pixel",
@@ -95,6 +103,41 @@ export const projects: Project[] = [
     tags: ["Game",],
     decoration: "clip",
     accent: "from-mint-deep to-butter-deep",
-    aspect: "portrait",
+    aspect: "wide",
+    image: mossgroto,
   },
+  {
+    id: "bro",
+    title: "bro",
+    category: "Brawl",
+    year: "2025",
+    tags: ["Game",],
+    decoration: "clip",
+    accent: "from-mint-deep to-butter-deep",
+    aspect: "portrait",
+    image: bro,
+  },
+  {
+    id: "ruko",
+    title: "ruko",
+    category: "ruko",
+    year: "2025",
+    tags: ["Game",],
+    decoration: "clip",
+    accent: "from-mint-deep to-butter-deep",
+    aspect: "portrait",
+    image: ruko,
+  },
+  {
+    id: "mossgroto",
+    title: "mossgroto",
+    category: "mossgroto",
+    year: "2025",
+    tags: ["Game",],
+    decoration: "clip",
+    accent: "from-mint-deep to-butter-deep",
+    aspect: "square",
+    image: sandy,
+  },
+
 ];
