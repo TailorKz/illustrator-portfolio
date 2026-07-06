@@ -4,7 +4,7 @@
 @theme {
   --font-hand: "Caveat", cursive;
   --font-sans: "Quicksand", system-ui, sans-serif;
-
+  --color-beige: #f2e8da;
   --color-cream: #fae1db;
   --color-blush: #fce7ee;
   --color-blush-deep: #f9d5e5;
@@ -127,6 +127,25 @@
   animation: shine-sweep 4s ease-in-out infinite;
 }
 
+.paper-grain {
+  background-image:
+    /* manchas suaves de luz/cor, pra tirar a sensação de "cor chapada" */
+    radial-gradient(ellipse 500px 380px at 8% 10%, rgba(255, 255, 255, 0.4), transparent 60%),
+    radial-gradient(ellipse 420px 480px at 92% 18%, rgba(249, 213, 229, 0.5), transparent 65%),
+    radial-gradient(ellipse 600px 420px at 18% 88%, rgba(190, 24, 108, 0.07), transparent 60%),
+    radial-gradient(ellipse 480px 460px at 88% 92%, rgba(255, 255, 255, 0.3), transparent 55%),
+    /* grão fino, em pontinhos rosa/branco (nunca cinza) */
+    repeating-radial-gradient(circle at 0 0, rgba(190, 24, 108, 0.05) 0, rgba(190, 24, 108, 0.05) 1px, transparent 1px, transparent 6px),
+    repeating-radial-gradient(circle at 3px 3px, rgba(255, 255, 255, 0.09) 0, rgba(255, 255, 255, 0.09) 1px, transparent 1px, transparent 6px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    6px 6px,
+    6px 6px;
+}
+
 @keyframes shine-sweep {
   0% { background-position: 160% 0; }
   100% { background-position: -60% 0; }
@@ -136,5 +155,24 @@
   .shine-text {
     animation: none;
     background-position: 0% 0;
+  }
+}
+
+/* Rastro de brilhOS atrás do mouse */
+.sparkle-trail {
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: sparkle-fade 0.7s ease-out forwards;
+  box-shadow: 0 0 6px rgba(253, 230, 138, 0.55);
+}
+
+@keyframes sparkle-fade {
+  0% {
+    opacity: 0.75;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -70%) scale(0.35);
   }
 }

@@ -52,3 +52,21 @@ export function PaperclipIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function PaletteIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <path
+        d="M12 3C7 3 3 6.6 3 11c0 2.9 2.2 4 4.3 4h1a1.6 1.6 0 0 1 1.6 1.6c0 .5-.2.9-.4 1.3-.3.5-.5 1-.5 1.6 0 1.4 1.4 2.5 3 2.5 5 0 9-4 9-9 0-5.5-4.5-9-9-9Z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="7.5" cy="10.5" r="1.15" fill="#ec4899" />
+      <circle cx="11" cy="7.2" r="1.15" fill="#16a34a" />
+      <circle cx="15.5" cy="8" r="1.15" fill="#ca8a04" />
+      <circle cx="17.3" cy="12" r="1.15" fill="#a9825a" />
+    </svg>
+  );
+}

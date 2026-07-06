@@ -14,10 +14,6 @@ type FloatingIconProps = {
   className?: string;
 };
 
-/**
- * Decorative icon that gently drifts + rotates forever.
- * Positioned absolutely inside a `relative` section.
- */
 export function FloatingIcon({
   children,
   top,

@@ -1,95 +1,95 @@
+import { useMemo, useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
+import { projects, type Project } from "../data/projects";
+import { ProjectCard } from "./ProjectCard";
+import { ProjectFilter } from "./ProjectFilter";
+import { useColumns } from "../hooks/useColumns";
 
-const projects = [
-  { id: 1, title: "Image", category: "Branding", year: "2026", color: "bg-pink-100", pin: true },
-  { id: 2, title: "Image", category: "Autoral Design", year: "2026", color: "bg-purple-100", tape: true },
-  { id: 3, title: "Image", category: "Scenario", year: "2025", color: "bg-green-100", clip: true },
-  { id: 4, title: "Image", category: "Autoral Design", year: "2024", color: "bg-blue-100", tape: true },
-];
+const ASPECT_WEIGHT: Record<Project["aspect"], number> = {
+  square: 1,
+  portrait: 1.33,
+  tall: 1.5,
+  wide: 0.85,
+};
 
 export function ProjectsSection() {
+  const [activeTag, setActiveTag] = useState("Principais");
+  const columnCount = useColumns({ default: 1, sm: 2, lg: 4 });
+
+  const tags = useMemo(
+    () => ["Principais", ...Array.from(new Set(projects.flatMap((p) => p.tags)))],
+    []
+  );
+
+  const filtered = useMemo(
+    () => (activeTag === "Principais" ? projects : projects.filter((p) => p.tags.includes(activeTag))),
+    [activeTag]
+  );
+
+  const columns = useMemo(() => {
+    const cols: Project[][] = Array.from({ length: columnCount }, () => []);
+    const heights = new Array(columnCount).fill(0);
+    filtered.forEach((project) => {
+      const shortest = heights.indexOf(Math.min(...heights));
+      cols[shortest].push(project);
+      heights[shortest] += ASPECT_WEIGHT[project.aspect];
+    });
+    return cols;
+  }, [filtered, columnCount]);
+
   return (
-    <section id="projects" className="w-full min-h-screen pt-32 pb-16 flex flex-col items-center">
-      
+    <section
+      id="projects"
+      className="relative flex w-full min-h-screen flex-col items-center bg-[var(--color-beige)] pb-20 pt-16"
+    >
       {/* Cabeçalho da Seção */}
-      <div className="w-full max-w-5xl flex flex-col md:flex-row justify-between items-end mb-16 px-4">
-        <motion.h2 
+      <div className="mx-auto mb-10 flex w-full max-w-6xl flex-col items-end justify-between gap-4 px-4 md:flex-row">
+        <motion.h2
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="font-hand text-6xl md:text-8xl text-[var(--color-ink)]"
+          className="font-hand text-6xl text-ink md:text-8xl"
         >
           Projects
-          <div className="h-1 w-3/4 bg-pink-400 rounded-full mt-2" />
+          <div className="mt-2 h-1 w-3/4 rounded-full bg-pink" />
         </motion.h2>
-        
-        <motion.div 
+
+        <motion.div
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="text-right mt-4 md:mt-0"
+          className="mt-4 text-right md:mt-0"
         >
-          <p className="font-sans text-gray-500 max-w-xs text-sm mb-4">
-            text
+          <p className="mb-4 max-w-xs font-sans text-sm text-ink-soft">
+            Uma seleção dos trabalhos mais recentes.
           </p>
-          <button className="text-pink-500 font-bold text-sm tracking-widest border border-pink-200 py-2 px-6 rounded-full hover:bg-pink-50 transition-colors">
+          <button className="rounded-full border border-pink-soft px-6 py-2 text-sm font-bold tracking-widest text-pink transition-colors hover:bg-pink-soft/40">
             VER TODOS <span className="ml-2">↓</span>
           </button>
         </motion.div>
       </div>
 
-      {/* Grid de Projetos (Estilo Polaroid) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-5xl px-4">
-        {projects.map((project, index) => (
-          <motion.div
-            key={project.id}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }} // Dispara animação um pouco antes de aparecer na tela
-            transition={{ delay: index * 0.15, type: "spring", stiffness: 100 }}
-            whileHover={{ y: -10, rotate: index % 2 === 0 ? 2 : -2 }} // Efeito de levantar a foto no hover
-            className="relative bg-white p-4 pb-6 rounded-sm shadow-xl border border-gray-100 flex flex-col items-center group cursor-pointer"
-          >
-            {/* Efeito Visual: Durex/Fita */}
-            {project.tape && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-6 bg-yellow-100/60 backdrop-blur-sm rotate-[-3deg] z-10 border border-yellow-200/30" />
-            )}
-            
-            {/* Efeito Visual: Alfinete */}
-            {project.pin && (
-              <div className="absolute -top-3 left-6 w-4 h-4 bg-pink-500 rounded-full shadow-md z-10 shadow-pink-500/50 border-2 border-pink-400">
-                <div className="absolute top-1 left-1 w-1 h-1 bg-white rounded-full opacity-60" />
-              </div>
-            )}
+      {/* Filtro por estilo */}
+      <ProjectFilter tags={tags} active={activeTag} onChange={setActiveTag} />
 
-            {/* Efeito Visual: Clipe de Papel */}
-            {project.clip && (
-              <div className="absolute -top-4 right-6 w-4 h-10 border-2 border-gray-400 rounded-full z-10 rotate-[15deg]" />
-            )}
-
-            {/* Imagem do Projeto (Placeholder colorido por enquanto) */}
-            <div className={`w-full h-64 ${project.color} mb-4 overflow-hidden flex items-center justify-center`}>
-              <span className="text-gray-400 font-sans text-sm">Imagem {project.title}</span>
-            </div>
-            
-            {/* Textos da Polaroid */}
-            <div className="w-full flex justify-between items-end">
-              <div>
-                <h3 className="font-sans font-bold text-gray-800 text-lg">{project.title}</h3>
-                <p className="font-sans text-gray-500 text-sm">{project.category}</p>
-                <p className="font-sans text-gray-400 text-xs mt-1">{project.year}</p>
-              </div>
-              <motion.div 
-                whileHover={{ x: 5 }}
-                className="text-gray-400"
-              >
-                →
-              </motion.div>
-            </div>
-          </motion.div>
+      <div className="mx-auto flex w-full max-w-6xl justify-center gap-6 px-4 pt-3">
+        {columns.map((col, colIndex) => (
+          <div key={colIndex} className="flex flex-1 flex-col gap-6">
+            <AnimatePresence mode="popLayout">
+              {col.map((project) => (
+                <ProjectCard key={project.id} project={project} index={filtered.indexOf(project)} />
+              ))}
+            </AnimatePresence>
+          </div>
         ))}
       </div>
 
+      {filtered.length === 0 && (
+        <p className="mt-10 font-sans text-sm text-ink-soft">
+          Nenhum projeto com esse estilo ainda — em breve!
+        </p>
+      )}
     </section>
   );
 }
