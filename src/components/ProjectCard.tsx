@@ -31,12 +31,13 @@ function Decoration({ type }: { type: Project["decoration"] }) {
   return null;
 }
 
-export function ProjectCard({ project, index }: { project: Project; index: number }) {
+export function ProjectCard({ project, index, onClick }: { project: Project; index: number; onClick: () => void }) {
   const rest = REST_ROTATION[index % REST_ROTATION.length];
 
   return (
     <motion.div
       layout
+      onClick={onClick}
       initial={{ opacity: 0, y: 40, rotate: rest }}
       whileInView={{ opacity: 1, y: 0, rotate: rest }}
       viewport={{ once: true, margin: "-60px" }}
@@ -44,7 +45,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       transition={{ delay: index * 0.05, type: "spring", stiffness: 120, damping: 18 }}
       whileHover={{ y: -10, rotate: 0, scale: 1.02 }}
       style={{ transformOrigin: "center bottom" }}
-      className="group relative flex w-full cursor-pen flex-col bg-[#fffaf6] p-3 pb-5 shadow-[0_2px_4px_rgba(58,46,46,0.06),0_16px_28px_rgba(58,46,46,0.14)]"
+      className="group relative flex w-full cursor-pointer flex-col bg-[#fffaf6] p-3 pb-5 shadow-[0_2px_4px_rgba(58,46,46,0.06),0_16px_28px_rgba(58,46,46,0.14)]"
     >
       <Decoration type={project.decoration} />
 

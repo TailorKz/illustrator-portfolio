@@ -2,15 +2,15 @@
 
 export type ProjectAspect = "square" | "portrait" | "tall" | "wide";
 export type ProjectDecoration = "tape" | "pin" | "clip" | "none";
-import redragon from "../assets/redragon_artev2.png";
-import aniver from "../assets/20sbirthday.png";
-import hades from "../assets/hades(1).png";
-import obito from "../assets/obito_rin (1).png";
-import bro from "../assets/1000173942.png";
-import ruko from "../assets/comission_rukoreiko.png";
-import sandy from "../assets/sandy_thumbnail-art-scale-4_00x-gigapixel.png";
-import gabialice from "../assets/gabialice.png";
-import mossgroto from "../assets/mossgroto.png";
+import redragon from "../assets/redragon_artev2.webp";
+import aniver from "../assets/20sbirthday.webp";
+import hades from "../assets/hades(1).webp";
+import obito from "../assets/obito_rin (1).webp";
+import bro from "../assets/1000173942.webp";
+import ruko from "../assets/comission_rukoreiko.webp";
+import sandy from "../assets/sandy_thumbnail-art-scale-4_00x-gigapixel.webp";
+import gabialice from "../assets/gabialice.webp";
+import mossgroto from "../assets/mossgroto.webp";
 
 
 export type Project = {
@@ -18,14 +18,17 @@ export type Project = {
   title: string;
   category: string;
   year: string;
-  /** Tags de estilo usadas no filtro lá em cima (ex: "Criativa", "Realista", "Jogo") */
   tags: string[];
-  /** Quando tiver a arte final, importe a imagem e coloque aqui */
-  image?: string;
+
+  // miniatura para o grid
+  image?: string; 
+  // imagem em para o Modal
+  fullImage?: string; 
+  // texto descritivo do projeto
+  description?: string; 
+
   decoration: ProjectDecoration;
-  /** Cor do placeholder enquanto não há imagem (gradiente dentro da paleta do projeto) */
   accent: string;
-  /** Proporção do card — dá a variação de altura do masonry */
   aspect: ProjectAspect;
 };
 
@@ -50,6 +53,8 @@ export const projects: Project[] = [
     accent: "from-pink-soft to-pink",
     aspect: "wide",
     image: redragon,
+    fullImage: redragon,
+    description: "Uma arte criada para estampar mousepads da Redragon.",
   },
   {
     id: "identidade-petit",
@@ -61,7 +66,8 @@ export const projects: Project[] = [
     accent: "from-butter to-butter-deep",
     aspect: "tall",
     image: hades,
-  },
+    fullImage: hades,
+    description: "Uma comission feita para o artista Sask.",},
   {
     id: "Obito-Rin",
     title: "Obito-Rin",
@@ -105,6 +111,8 @@ export const projects: Project[] = [
     accent: "from-mint-deep to-butter-deep",
     aspect: "wide",
     image: mossgroto,
+    fullImage: mossgroto,
+    description: "Uma arte criada para estampar criada para estampar m criada para estampar m criada para estampar m mousepads da  criada para estampar m criada para estampar m criada para estampar m criada para estampar m criada para estampar m criada para estampar mRedragon.",
   },
   {
     id: "bro",

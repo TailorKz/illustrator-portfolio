@@ -1,74 +1,90 @@
+import { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 import { Navbar } from "./components/Navbar";
 import { FloatingIcon } from "./components/FloatingIcon";
-import {
-  HeartIcon,
-  StarIcon,
-  SparkleIcon,
-  FlowerIcon,
-} from "./components/Icons";
+import { HeartIcon, StarIcon, SparkleIcon, FlowerIcon } from "./components/Icons";
 import { WelcomeSection } from "./components/WelcomeSection";
 import { ProjectsSection } from "./components/ProjectsSection";
 import { CursorSparkles } from "./components/CursorSparkles";
+import { LoadingScreen } from "./components/LoadingScreen";
+import { AllProjectsPage } from "./components/AllProjectsPage"; // A SUA NOVA PÁGINA
+
+const PRELOAD_IMAGES = [
+  "/estrelas1.png", "/estrelas2.png", "/folha.png", "/canetas.png",
+  "/clips.png", "/clippreto.png", "/chaveirinho.png", "/alfinete.png",
+  "/laco.png", "/papelzinho.png"
+];
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // O ESTADO QUE CONTROLA AS PÁGINAS DO SITE
+  const [currentPage, setCurrentPage] = useState<"home" | "all-projects">("home");
+
+  useEffect(() => {
+    const loadImages = Promise.all(
+      PRELOAD_IMAGES.map((src) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = resolve;
+          img.onerror = resolve;
+          img.src = src;
+        });
+      })
+    );
+
+    const minTime = new Promise((resolve) => setTimeout(resolve, 1500));
+
+    Promise.all([loadImages, minTime]).then(() => {
+      setIsLoading(false);
+    });
+  }, []);
+
   return (
     <div className="relative min-h-screen bg-[var(--color-cream)] overflow-hidden">
-      <CursorSparkles />
-      {/* Navbar Fixa */}
-      <Navbar />
+      <AnimatePresence>
+        {isLoading && <LoadingScreen key="loading" />}
+      </AnimatePresence>
 
-      {/* Ícones Flutuantes de Background (Global) */}
+      <CursorSparkles />
+      
+      {/* Oculta a Navbar se estivermos na página de todos os projetos */}
+      {currentPage === "home" && <Navbar />}
+
+      {/* Ícones flutuantes decorativos globais */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <FloatingIcon top="10%" left="5%" duration={8} delay={0} rotate={15}>
           <StarIcon className="w-8 h-8 text-[var(--color-mint-deep)] opacity-60" />
         </FloatingIcon>
-        <FloatingIcon
-          top="20%"
-          right="10%"
-          duration={10}
-          delay={1}
-          rotate={-10}
-        >
+        <FloatingIcon top="20%" right="10%" duration={10} delay={1} rotate={-10}>
           <HeartIcon className="w-10 h-10 text-[var(--color-pink-soft)]" />
         </FloatingIcon>
         <FloatingIcon top="60%" left="8%" duration={7} delay={2} rotate={20}>
           <FlowerIcon className="w-12 h-12 text-[var(--color-lavender)] opacity-70" />
         </FloatingIcon>
-        <FloatingIcon
-          top="80%"
-          right="5%"
-          duration={9}
-          delay={0.5}
-          rotate={-25}
-        >
+        <FloatingIcon top="80%" right="5%" duration={9} delay={0.5} rotate={-25}>
           <SparkleIcon className="w-8 h-8 text-[var(--color-butter-deep)] opacity-50" />
         </FloatingIcon>
       </div>
 
-      {/* Conteúdo das Seções */}
       <main className="relative z-10 flex flex-col items-center w-full pb-24">
-        <WelcomeSection />
-        <ProjectsSection />
-
-        {/* Seção About (Placeholder) */}
-        <section
-          id="about"
-          className="min-h-screen w-full flex items-center justify-center pt-24"
-        >
-          <h2 className="font-hand text-6xl text-[var(--color-ink)]">
-            About me
-          </h2>
-        </section>
-
-        {/* Seção Contact (Placeholder) */}
-        <section
-          id="contact"
-          className="min-h-screen w-full flex items-center justify-center pt-24"
-        >
-          <h2 className="font-hand text-6xl text-[var(--color-ink)]">
-            Contact
-          </h2>
-        </section>
+        {currentPage === "home" ? (
+          <>
+            <WelcomeSection isLoading={isLoading} />
+            {/* O botão "Ver todos" agora diz ao App para trocar a página! */}
+            <ProjectsSection onSeeAll={() => setCurrentPage("all-projects")} />
+            
+            <section id="about" className="min-h-screen w-full flex items-center justify-center pt-24">
+              <h2 className="font-hand text-6xl text-[var(--color-ink)]">About me</h2>
+            </section>
+            
+            <section id="contact" className="min-h-screen w-full flex items-center justify-center pt-24">
+              <h2 className="font-hand text-6xl text-[var(--color-ink)]">Contact</h2>
+            </section>
+          </>
+        ) : (
+          <AllProjectsPage onBack={() => setCurrentPage("home")} />
+        )}
       </main>
     </div>
   );

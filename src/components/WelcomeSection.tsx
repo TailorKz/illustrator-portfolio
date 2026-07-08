@@ -1,22 +1,32 @@
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect } from "react";
 import { TornEdge } from "./TornEdge";
 import { FloatingIcon } from "./FloatingIcon";
 import { FlowerIcon, SparkleIcon, PenIcon, PaletteIcon } from "./Icons";
 
-export function WelcomeSection() {
+// Recebemos a prop isLoading
+export function WelcomeSection({ isLoading }: { isLoading?: boolean }) {
+  // Controlador global das animações
+  const controls = useAnimation();
+
+  useEffect(() => {
+    // Só dispara o início das animações quando o isLoading for falso
+    if (!isLoading) {
+      controls.start("visible");
+    }
+  }, [isLoading, controls]);
+
   return (
     <section
       id="welcome"
-      // pb-20 serve para dar espaço para o papelzinho
       className="relative z-20 w-full bg-[#fae1db] flex items-start justify-center pt-8 md:pt-10 px-4 sm:px-8 pb-4"
     >
+      <div
+        className="paper-grain absolute inset-0 z-0 pointer-events-none"
+        aria-hidden="true"
+      />
 
-       {/* Textura de papel/cartolina sobre o rosa */}
-+      <div
-      className="paper-grain absolute inset-0 z-0 pointer-events-none"
-      aria-hidden="true"
-    />
-      {/* ESTRELAS */}
+      {/* Ícones de Fundo (podem manter a animação em loop) */}
       <motion.img
         animate={{ y: [0, -15, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -45,7 +55,7 @@ export function WelcomeSection() {
         alt=""
         className="absolute bottom-32 right-12 md:right-74 w-16 md:w-24 z-50 drop-shadow-md opacity-90 -rotate-12 -scale-x-100"
       />
-{/* flores, brilhos e icones soltos no fundo */}
+
       <FloatingIcon
         top="24%"
         left="3%"
@@ -57,7 +67,6 @@ export function WelcomeSection() {
       >
         <FlowerIcon className="h-9 w-9 text-pink-deep/80 drop-shadow-md md:h-12 md:w-12" />
       </FloatingIcon>
-
       <FloatingIcon
         bottom="20%"
         left="10%"
@@ -70,7 +79,6 @@ export function WelcomeSection() {
       >
         <FlowerIcon className="h-7 w-7 -scale-x-100 text-butter-deep/80 drop-shadow-md md:h-10 md:w-10" />
       </FloatingIcon>
-
       <FloatingIcon
         top="12%"
         right="8%"
@@ -81,7 +89,6 @@ export function WelcomeSection() {
       >
         <SparkleIcon className="h-6 w-6 text-butter-deep drop-shadow md:h-8 md:w-8" />
       </FloatingIcon>
-
       <FloatingIcon
         bottom="16%"
         right="4%"
@@ -93,7 +100,6 @@ export function WelcomeSection() {
       >
         <SparkleIcon className="h-5 w-5 text-pink drop-shadow md:h-7 md:w-7" />
       </FloatingIcon>
-
       <FloatingIcon
         top="36%"
         right="2%"
@@ -105,7 +111,6 @@ export function WelcomeSection() {
       >
         <PenIcon className="h-8 w-8 text-ink-soft drop-shadow-md md:h-11 md:w-11" />
       </FloatingIcon>
-
       <FloatingIcon
         bottom="6%"
         left="4%"
@@ -118,14 +123,17 @@ export function WelcomeSection() {
       >
         <PaletteIcon className="h-9 w-9 text-kraft-deep drop-shadow-md md:h-12 md:w-12" />
       </FloatingIcon>
-      {/* PRANCHETA ROSA */}
+
+      {/* PRANCHETA ROSA - Agora usa variants e o 'controls' */}
       <motion.div
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        initial="hidden"
+        animate={controls}
+        variants={{
+          hidden: { scale: 0.95, opacity: 0 },
+          visible: { scale: 1, opacity: 1, transition: { duration: 0.8 } },
+        }}
         className="relative z-10 w-full max-w-[1050px] bg-[#fbc6ce] rounded-[32px] md:rounded-[48px] flex items-center justify-center p-6 sm:p-12 md:p-16 border-[2px] border-white/40"
       >
-        {/* Folha rasgada (Fundo) */}
         <img
           src="/folha.png"
           alt="Folha de caderno rasgada"
@@ -137,14 +145,18 @@ export function WelcomeSection() {
           className="absolute bottom-4 right-[-20px] md:right-[-40px] w-32 md:w-85 z-40 hidden md:block rotate-[-5deg] -scale-x-100"
         />
 
+        {/* QUADRICULADO PRINCIPAL */}
         <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-
+          variants={{
+            hidden: { y: 30, opacity: 0 },
+            visible: {
+              y: 0,
+              opacity: 1,
+              transition: { duration: 0.8, delay: 0.2, ease: "easeOut" },
+            },
+          }}
           className="relative z-20 w-full max-w-[800px] flex flex-col items-center justify-center py-12 md:py-16"
         >
-          {/* PAPEL QUADRICULADO PRINCIPAL */}
           <div
             className="absolute inset-0 bg-white rounded-md shadow-xl border border-gray-200/60 transform -rotate-2"
             style={{
@@ -207,98 +219,102 @@ export function WelcomeSection() {
             </div>
           </motion.div>
 
-          {/* TEXTO E BOTÃO*/}
           <div className="relative z-30 flex flex-col items-center text-center px-6 pointer-events-auto mt-4">
             <motion.h2
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
+              initial="hidden"
+              animate={controls}
+              variants={{
+                hidden: { scale: 0.8, opacity: 0 },
+                visible: {
+                  scale: 1,
+                  opacity: 1,
+                  transition: { delay: 0.4, duration: 0.5 },
+                },
+              }}
               className="shine-text inline-block font-['Parisienne',_cursive] text-7xl md:text-[100px] leading-[1.4] px-4 md:px-6 py-2 md:py-3 -translate-y-[10px] md:-translate-y-[15px] -mb-6 md:-mb-9"
             >
               welcome
             </motion.h2>
             <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-              className="font-['Parisienne',_cursive] text-3xl md:text-5xl text-gray-700 mb-1 mt-2"
-            >
-              to my
-            </motion.p>
+  initial="hidden"
+  animate={controls}
+  variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { delay: 0.7 } } }}
+  className="font-['Parisienne',_cursive] text-3xl md:text-5xl text-gray-700 mb-1 mt-2"
+>
+  to my
+</motion.p>
+
+  <motion.div
+  initial="hidden"
+  animate={isLoading ? "hidden" : "visible"} /* A mágica acontece aqui */
+  whileHover="hover"
+  whileTap="hover"
+  variants={{
+    hidden: {},
+    visible: {
+      transition: { staggerChildren: 0.045, delayChildren: 0.9 },
+    },
+    hover: { transition: { staggerChildren: 0.05 } },
+  }}
+  className="relative flex flex-col items-center mt-2 md:mt-4"
+>
+  <h1 className="font-['Kaushan_Script',_cursive] text-[80px] md:text-[130px] leading-none text-[var(--color-ink)] tracking-tight flex">
+    {"Portfolio".split("").map((letter, i) => (
+      <motion.span
+        key={i}
+        variants={{
+          hidden: {
+            opacity: 0,
+            y: 46,
+            rotate: i % 2 === 0 ? -14 : 14,
+          },
+          visible: {
+            opacity: 1,
+            y: 0,
+            rotate: 0,
+            transition: {
+              type: "spring",
+              stiffness: 260,
+              damping: 14,
+            },
+          },
+          hover: {
+            y: [0, -18, 0],
+            rotate: [0, i % 2 === 0 ? -6 : 6, 0],
+            transition: { duration: 0.55, ease: "easeInOut" },
+          },
+        }}
+        className="inline-block"
+      >
+        {letter}
+      </motion.span>
+    ))}
+  </h1>
+  <motion.svg
+    className="w-64 md:w-[340px] mt-[-5px] md:mt-[-10px] text-[var(--color-ink)] transform rotate-1"
+    viewBox="0 0 300 40"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="6"
+    strokeLinecap="round"
+  >
+    <motion.path
+      d="M10,20 Q150,5 290,20 Q150,35 20,30"
+      variants={{
+        hidden: { pathLength: 0, opacity: 0 },
+        visible: { pathLength: 1, opacity: 1, transition: { delay: 1.6, duration: 0.9, ease: "easeInOut" } }
+      }}
+    />
+  </motion.svg>
+</motion.div>
 
             <motion.div
-              initial="hidden"
-              animate="visible"
-              whileHover="hover"
-              whileTap="hover"
-              variants={{
-                hidden: {},
-                visible: {
-                  transition: { staggerChildren: 0.045, delayChildren: 0.9 },
-                },
-                hover: { transition: { staggerChildren: 0.05 } },
-              }}
-              className="relative flex flex-col items-center mt-2 md:mt-4"
-            >
-              <h1 className="font-['Kaushan_Script',_cursive] text-[80px] md:text-[130px] leading-none text-[var(--color-ink)] tracking-tight flex">
-                {"Portfolio".split("").map((letter, i) => (
-                  <motion.span
-                    key={i}
-                    variants={{
-                      hidden: {
-                        opacity: 0,
-                        y: 46,
-                        rotate: i % 2 === 0 ? -14 : 14,
-                      },
-                      visible: {
-                        opacity: 1,
-                        y: 0,
-                        rotate: 0,
-                        transition: {
-                          type: "spring",
-                          stiffness: 260,
-                          damping: 14,
-                        },
-                      },
-                      hover: {
-                        y: [0, -18, 0],
-                        rotate: [0, i % 2 === 0 ? -6 : 6, 0],
-                        transition: { duration: 0.55, ease: "easeInOut" },
-                      },
-                    }}
-                    className="inline-block"
-                  >
-                    {letter}
-                  </motion.span>
-                ))}
-              </h1>
-              <motion.svg
-                className="w-64 md:w-[340px] mt-[-5px] md:mt-[-10px] text-[var(--color-ink)] transform rotate-1"
-                viewBox="0 0 300 40"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="6"
-                strokeLinecap="round"
-              >
-                <motion.path
-                  d="M10,20 Q150,5 290,20 Q150,35 20,30"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
-                  transition={{ delay: 1.6, duration: 0.9, ease: "easeInOut" }}
-                />
-              </motion.svg>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.1 }}
-              className="mt-12 md:mt-16 z-40 flex flex-col items-center cursor-pointer group"
-              onClick={() =>
-                document
-                  .getElementById("projects")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-            >
+  initial="hidden"
+  animate={controls}
+  variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0, transition: { delay: 1.1 } } }}
+  className="mt-12 md:mt-16 z-40 flex flex-col items-center cursor-pointer group"
+  onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+>
               <span className="text-pink-500 font-sans font-bold tracking-widest text-sm uppercase mb-2 group-hover:text-pink-400 transition-colors">
                 See More
               </span>
@@ -326,7 +342,6 @@ export function WelcomeSection() {
         </motion.div>
       </motion.div>
 
-      {/* RASGO DE PAPEL */}
       <TornEdge />
     </section>
   );
