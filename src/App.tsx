@@ -7,7 +7,9 @@ import { WelcomeSection } from "./components/WelcomeSection";
 import { ProjectsSection } from "./components/ProjectsSection";
 import { CursorSparkles } from "./components/CursorSparkles";
 import { LoadingScreen } from "./components/LoadingScreen";
-import { AllProjectsPage } from "./components/AllProjectsPage"; // A SUA NOVA PÁGINA
+import { AllProjectsPage } from "./components/AllProjectsPage";
+import { AboutSection } from "./components/AboutSection";
+import { ContactSection } from "./components/ContactSection";
 
 const PRELOAD_IMAGES = [
   "/estrelas1.png", "/estrelas2.png", "/folha.png", "/canetas.png",
@@ -18,7 +20,7 @@ const PRELOAD_IMAGES = [
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   
-  // O ESTADO QUE CONTROLA AS PÁGINAS DO SITE
+  // ESTADO QUE CONTROLA AS PÁGINAS DO SITE
   const [currentPage, setCurrentPage] = useState<"home" | "all-projects">("home");
 
   useEffect(() => {
@@ -33,7 +35,7 @@ function App() {
       })
     );
 
-    const minTime = new Promise((resolve) => setTimeout(resolve, 1500));
+    const minTime = new Promise((resolve) => setTimeout(resolve, 2200));
 
     Promise.all([loadImages, minTime]).then(() => {
       setIsLoading(false);
@@ -42,14 +44,14 @@ function App() {
 
   return (
     <div className="relative min-h-screen bg-[var(--color-cream)] overflow-hidden">
+      
       <AnimatePresence>
         {isLoading && <LoadingScreen key="loading" />}
       </AnimatePresence>
 
       <CursorSparkles />
       
-      {/* Oculta a Navbar se estivermos na página de todos os projetos */}
-      {currentPage === "home" && <Navbar />}
+      <Navbar onNavigate={() => setCurrentPage("home")} />
 
       {/* Ícones flutuantes decorativos globais */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -71,14 +73,13 @@ function App() {
         {currentPage === "home" ? (
           <>
             <WelcomeSection isLoading={isLoading} />
-            {/* O botão "Ver todos" agora diz ao App para trocar a página! */}
             <ProjectsSection onSeeAll={() => setCurrentPage("all-projects")} />
             
-            <section id="about" className="min-h-screen w-full flex items-center justify-center pt-24">
-              <h2 className="font-hand text-6xl text-[var(--color-ink)]">About me</h2>
-            </section>
-            
-            <section id="contact" className="min-h-screen w-full flex items-center justify-center pt-24">
+            {/* Chamando a nossa nova seção! */}
+            <AboutSection />
+            <ContactSection />
+            {/* O fundo do contato agora combina com o rasgo da AboutSection */}
+            <section id="contact" className="min-h-screen w-full flex items-center justify-center pt-24 bg-[var(--color-butter)]">
               <h2 className="font-hand text-6xl text-[var(--color-ink)]">Contact</h2>
             </section>
           </>

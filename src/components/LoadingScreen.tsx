@@ -169,6 +169,63 @@ const sparkles = Array.from({ length: 14 }, (_, i) => ({
   delay: Math.random() * 2,
 }));
 
+// função abelha
+const BEE_LOOP_DURATION = 6; // segundos por volta completa
+
+function Bee() {
+  return (
+    <motion.div
+      className="absolute pointer-events-none z-20"
+      style={{ width: 40, height: 27 }}
+      initial={{ opacity: 0 }}
+      animate={{
+        opacity: [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+        // Curva da direita "encurtada" (o máximo agora é 56% em vez de 64%)
+        left: [
+          "36%", "45%", "52%", "56%", "48%", 
+          "42%", "34%", "28%", "30%", "36%"
+        ],
+        top: [
+          "56%", "46%", "44%", "50%", "58%", 
+          "62%", "58%", "50%", "48%", "56%"
+        ],
+        rotate: [15, 25, 10, -15, -25, -15, -5, 15, 25, 15],
+      }}
+      transition={{
+        duration: BEE_LOOP_DURATION,
+        repeat: Infinity,
+        ease: "easeInOut",
+        times: [0, 0.12, 0.24, 0.36, 0.48, 0.6, 0.72, 0.84, 0.94, 1],
+      }}
+    >
+      <svg viewBox="0 0 60 40" className="w-full h-full drop-shadow-sm">
+        <motion.ellipse
+          cx="22" cy="9" rx="10" ry="6"
+          fill="rgba(255,255,255,0.65)"
+          stroke="var(--color-ink)"
+          strokeWidth="1.5"
+          animate={{ scaleY: [1, 0.35, 1] }}
+          transition={{ duration: 0.14, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.ellipse
+          cx="38" cy="9" rx="10" ry="6"
+          fill="rgba(255,255,255,0.65)"
+          stroke="var(--color-ink)"
+          strokeWidth="1.5"
+          animate={{ scaleY: [1, 0.35, 1] }}
+          transition={{ duration: 0.14, repeat: Infinity, ease: "easeInOut", delay: 0.05 }}
+        />
+        <ellipse cx="30" cy="24" rx="16" ry="12" fill="#F6C544" stroke="var(--color-ink)" strokeWidth="2" />
+        <path d="M17 20 Q30 26 43 20" stroke="var(--color-ink)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+        <path d="M16 27 Q30 33 44 27" stroke="var(--color-ink)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+        <circle cx="46" cy="22" r="6" fill="#F6C544" stroke="var(--color-ink)" strokeWidth="2" />
+        <path d="M48 17 Q52 12 55 13" stroke="var(--color-ink)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+        <path d="M48 19 Q53 15 56 17" stroke="var(--color-ink)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+      </svg>
+    </motion.div>
+  );
+}
+
 export function LoadingScreen() {
   return (
     <motion.div
@@ -236,7 +293,7 @@ export function LoadingScreen() {
           transition={{ duration: s.duration, delay: s.delay, repeat: Infinity, ease: "easeInOut" }}
         />
       ))}
-
+      <Bee />
       <div className="relative z-10 flex flex-col items-center justify-center">
         <motion.svg
           viewBox="0 0 618 940"
