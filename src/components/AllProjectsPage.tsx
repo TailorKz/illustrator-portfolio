@@ -3,22 +3,12 @@ import { AnimatePresence } from "framer-motion";
 import { projects, type Project } from "../data/projects";
 import { ProjectCard } from "./ProjectCard";
 import { ProjectFilter } from "./ProjectFilter";
-import { useColumns } from "../hooks/useColumns";
 import { ProjectModal } from "./ProjectModal";
-
-const ASPECT_WEIGHT: Record<Project["aspect"], number> = {
-  square: 1,
-  portrait: 1.33,
-  tall: 1.5,
-  wide: 0.85,
-};
 
 export function AllProjectsPage({ onBack }: { onBack: () => void }) {
   const [activeTag, setActiveTag] = useState("Todos");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const columnCount = useColumns({ default: 1, sm: 2, lg: 4 });
 
-  // Joga a tela para o topo sempre que a página "Galeria" for aberta
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -33,20 +23,8 @@ export function AllProjectsPage({ onBack }: { onBack: () => void }) {
     [activeTag]
   );
 
-  const columns = useMemo(() => {
-    const cols: Project[][] = Array.from({ length: columnCount }, () => []);
-    const heights = new Array(columnCount).fill(0);
-    filtered.forEach((project) => {
-      const shortest = heights.indexOf(Math.min(...heights));
-      cols[shortest].push(project);
-      heights[shortest] += ASPECT_WEIGHT[project.aspect];
-    });
-    return cols;
-  }, [filtered, columnCount]);
-
   return (
     <div className="relative min-h-screen bg-[var(--color-beige)] pt-12 md:pt-20 pb-20 px-4 w-full">
-      {/* O Modal continua existindo aqui também! */}
       <AnimatePresence>
         {selectedProject && (
           <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
@@ -67,7 +45,7 @@ export function AllProjectsPage({ onBack }: { onBack: () => void }) {
           <div className="mt-2 h-1 w-48 rounded-full bg-pink" />
         </h1>
         <p className="mt-4 max-w-xl font-sans text-base text-ink-soft">
-          Texto futuro ideias
+          Explore todas as minhas ilustrações e projetos.
         </p>
       </div>
 
@@ -75,21 +53,19 @@ export function AllProjectsPage({ onBack }: { onBack: () => void }) {
         <ProjectFilter tags={tags} active={activeTag} onChange={setActiveTag} />
       </div>
 
-      <div className="mx-auto flex w-full max-w-6xl justify-center gap-6 pt-3">
-        {columns.map((col, colIndex) => (
-          <div key={colIndex} className="flex flex-1 flex-col gap-6">
-            <AnimatePresence mode="popLayout">
-              {col.map((project) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  index={filtered.indexOf(project)}
-                  onClick={() => setSelectedProject(project)}
-                />
-              ))}
-            </AnimatePresence>
-          </div>
-        ))}
+      {/* A SOLUÇÃO MASONRY NATIVA E PERFEITA (4 Colunas) */}
+      <div className="mx-auto w-full max-w-6xl pt-3 columns-1 sm:columns-2 lg:columns-4 gap-6">
+        <AnimatePresence mode="popLayout">
+          {filtered.map((project, index) => (
+            <div key={project.id} className="break-inside-avoid mb-6">
+              <ProjectCard
+                project={project}
+                index={index}
+                onClick={() => setSelectedProject(project)}
+              />
+            </div>
+          ))}
+        </AnimatePresence>
       </div>
     </div>
   );

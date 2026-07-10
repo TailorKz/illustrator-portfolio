@@ -69,7 +69,7 @@ function App() {
         </FloatingIcon>
       </div>
 
-      <main className="relative z-10 flex flex-col items-center w-full pb-24">
+      <main className="relative z-10 flex flex-col items-center w-full">
         {currentPage === "home" ? (
           <>
             <WelcomeSection isLoading={isLoading} />
@@ -79,15 +79,14 @@ function App() {
             <AboutSection />
             <ContactSection />
             {/* O fundo do contato agora combina com o rasgo da AboutSection */}
-            <section id="contact" className="min-h-screen w-full flex items-center justify-center pt-24 bg-[var(--color-butter)]">
-              <h2 className="font-hand text-6xl text-[var(--color-ink)]">Contact</h2>
-            </section>
+            
           </>
         ) : (
           <AllProjectsPage onBack={() => setCurrentPage("home")} />
         )}
       </main>
     </div>
+    
   );
 }
 

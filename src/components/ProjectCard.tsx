@@ -33,6 +33,9 @@ function Decoration({ type }: { type: Project["decoration"] }) {
 
 export function ProjectCard({ project, index, onClick }: { project: Project; index: number; onClick: () => void }) {
   const rest = REST_ROTATION[index % REST_ROTATION.length];
+  
+  // A MÁGICA CONTRA A LENTIDÃO: O delay zera a cada 10 itens, então eles sempre aparecem rápido!
+  const delayTime = (index % 10) * 0.05;
 
   return (
     <motion.div
@@ -42,21 +45,20 @@ export function ProjectCard({ project, index, onClick }: { project: Project; ind
       whileInView={{ opacity: 1, y: 0, rotate: rest }}
       viewport={{ once: true, margin: "-60px" }}
       exit={{ opacity: 0, scale: 0.92 }}
-      transition={{ delay: index * 0.05, type: "spring", stiffness: 120, damping: 18 }}
+      transition={{ delay: delayTime, type: "spring", stiffness: 120, damping: 18 }}
       whileHover={{ y: -10, rotate: 0, scale: 1.02 }}
       style={{ transformOrigin: "center bottom" }}
       className="group relative flex w-full cursor-pointer flex-col bg-[#fffaf6] p-3 pb-5 shadow-[0_2px_4px_rgba(58,46,46,0.06),0_16px_28px_rgba(58,46,46,0.14)]"
     >
       <Decoration type={project.decoration} />
-
       <div
         className={`relative mb-4 flex w-full items-center justify-center overflow-hidden bg-gradient-to-br ${project.accent} ${ASPECT_CLASS[project.aspect]}`}
       >
         {project.image ? (
-          <img src={project.image} alt={project.title} className="h-full w-full object-cover" />
+          // loading="lazy" adicionado para performance brutal!
+          <img src={project.image} alt={project.title} loading="lazy" className="h-full w-full object-cover" />
         ) : (
           <>
-            {/* Textura de listras finas */}
             <div
               className="absolute inset-0 opacity-[0.15]"
               style={{
@@ -64,28 +66,22 @@ export function ProjectCard({ project, index, onClick }: { project: Project; ind
                   "repeating-linear-gradient(135deg, rgba(255,255,255,0.6) 0px, rgba(255,255,255,0.6) 2px, transparent 2px, transparent 14px)",
               }}
             />
-            {/* Monograma fantasma */}
             <span className="pointer-events-none absolute -bottom-4 -right-2 select-none font-hand text-[7rem] leading-none text-white/25">
               {project.title.charAt(0)}
             </span>
             <span className="relative px-5 text-center font-hand text-xl text-white drop-shadow-sm">
               {project.title}
             </span>
-            {/* Dobra de canto da folha */}
             <div className="absolute right-0 top-0 h-6 w-6 bg-white/25 [clip-path:polygon(100%_0,0_0,100%_100%)]" />
           </>
         )}
       </div>
-
       <div className="flex w-full items-end justify-between px-1">
         <div>
           <h3 className="font-sans text-base font-bold text-ink">{project.title}</h3>
           <p className="font-sans text-sm text-ink-soft">{project.category}</p>
           <p className="mt-0.5 font-sans text-xs text-ink-soft/70">{project.year}</p>
         </div>
-        <motion.span whileHover={{ x: 4 }} className="font-sans text-ink-soft">
-          →
-        </motion.span>
       </div>
     </motion.div>
   );

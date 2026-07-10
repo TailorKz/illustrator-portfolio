@@ -3,39 +3,41 @@ import { motion } from "framer-motion";
 
 const tabs = [
   { id: "welcome", label: "Welcome", icon: "✿", color: "#f9a8c9" },
-  { id: "projects", label: "Projects", icon: "✎", color: "#7dd8a3" },
-  { id: "about", label: "About", icon: "☺", color: "#b8a4f0" },
-  { id: "contact", label: "Contact", icon: "✉", color: "#f5c451" },
+  { id: "projects", label: "Projects", icon: "✎", color: "#ffcc85" },
+  { id: "about", label: "About", icon: "☺", color: "#f7f037" },
+  { id: "contact", label: "Contact", icon: "✉", color: "#b0ffb7" },
 ];
 
 export function Navbar({ onNavigate }: { onNavigate?: () => void }) {
-  const [activeTab, setActiveTab] = useState<string | null>("welcome"); // Inicia no welcome
+  const [activeTab, setActiveTab] = useState<string | null>("welcome");
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
-  // 1. O RADAR (Intersection Observer)
+  // 1. O RADAR INFALÍVEL (Busca a posição em tempo real)
   useEffect(() => {
-    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        // Se a seção cruzou o centro da tela, ela se torna a aba ativa
-        if (entry.isIntersecting) {
-          setActiveTab(entry.target.id);
+    const handleScroll = () => {
+      // Definimos a "linha de gatilho" bem no meio da tela
+      const triggerPoint = window.innerHeight / 2;
+
+      // Lemos as seções de trás para frente (Contact -> About -> Projects -> Welcome)
+      // para garantir que a aba mude corretamente conforme rolamos para baixo
+      for (let i = tabs.length - 1; i >= 0; i--) {
+        const section = document.getElementById(tabs[i].id);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          // Se o topo da seção cruzou a linha de gatilho, a bolha vai para ela
+          if (rect.top <= triggerPoint) {
+            setActiveTab(tabs[i].id);
+            return; 
+          }
         }
-      });
+      }
     };
 
-    // Configuração do radar: -40% no topo e no fundo força ele a só
-    // ativar a seção quando ela realmente estiver no "meio" do seu monitor.
-    const observer = new IntersectionObserver(handleIntersect, {
-      rootMargin: "-40% 0px -40% 0px",
-    });
+    window.addEventListener("scroll", handleScroll);
+    // Chama a função imediatamente para a bolha carregar no lugar certo
+    handleScroll();
 
-    // Pega as IDs do nosso array e manda o radar observar cada uma
-    tabs.forEach((tab) => {
-      const element = document.getElementById(tab.id);
-      if (element) observer.observe(element);
-    });
-
-    return () => observer.disconnect();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // 👇 Fonte única de verdade: hover sempre tem prioridade sobre o active.

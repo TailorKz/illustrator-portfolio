@@ -132,7 +132,7 @@ export function AboutSection() {
           </motion.div>
         </div>
 <div className="w-full flex justify-center mt-20 mb-8 opacity-40">
-          <svg className="w-full max-w-2xl h-6" viewBox="0 0 400 20" fill="none" stroke="var(--color-ink-soft)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" preserveAspectRatio="none">
+          <svg className="w-full max-w-2xl h-6 overflow-visible" viewBox="0 0 400 20" fill="none" stroke="var(--color-ink-soft)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" preserveAspectRatio="none">
             <motion.path 
               initial={{ pathLength: 0 }}
               whileInView={{ pathLength: 1 }}
@@ -196,31 +196,32 @@ export function AboutSection() {
               <span className="text-3xl">💼</span> Experiência Profissional
             </h3>
             <div className="flex flex-col gap-10 relative border-l-2 border-butter-deep/40 ml-3 pl-8">
+            <div className="relative">
+                <div className="absolute -left-[41px] top-1 h-4 w-4 rounded-full border-4 border-[#fffedf] bg-butter-deep" />
+                <h4 className="font-sans font-bold text-ink text-xl">
+                  Designer
+                </h4>
+                <p className="font-sans text-sm text-butter-deep font-bold mb-2">
+                  Taggy Contact • 10/2025 - Atualmente
+                </p>
+                <p className="font-sans text-ink-soft leading-relaxed">
+                  Faço parte do time de criação de artes da empresa, desenvolvo protótipos juntamente dos clientes com mockups pra apresentação e atendimento ao público home office.
+                </p>
+              </div>
               <div className="relative">
                 <div className="absolute -left-[41px] top-1 h-4 w-4 rounded-full border-4 border-[#fffedf] bg-butter-deep" />
                 <h4 className="font-sans font-bold text-ink text-xl">
                   Ilustradora Freelancer
                 </h4>
                 <p className="font-sans text-sm text-butter-deep font-bold mb-2">
-                  Autônomo • 2021 - Atual
+                  Autônomo • 2021 - Atualmente
                 </p>
                 <p className="font-sans text-ink-soft leading-relaxed">
                   Atuo como ilustradora freelancer, criando imagens que contam histórias, especialmente através de personagens originais (OCs), uma das áreas que mais tenho explorado e desenvolvido atualmente, além de ilustrações digitais para estampas e capas de livros até projetos de identidade visual, como logotipos com elementos ilustrados. 
                 </p>
               </div>
 
-              <div className="relative">
-                <div className="absolute -left-[41px] top-1 h-4 w-4 rounded-full border-4 border-[#fffedf] bg-butter-deep" />
-                <h4 className="font-sans font-bold text-ink text-xl">
-                  Designer
-                </h4>
-                <p className="font-sans text-sm text-butter-deep font-bold mb-2">
-                  Taggy Contact • Outubro 2025
-                </p>
-                <p className="font-sans text-ink-soft leading-relaxed">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptates voluptatum nesciunt cum, nemo alias eligendi. Cum perferendis neque sunt, dolorum nesciunt ex sapiente? Deserunt, nulla beatae? Quisquam, ipsum natus! Recusandae?
-                </p>
-              </div>
+              
             </div>
           </motion.div>
         </div>

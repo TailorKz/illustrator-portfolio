@@ -4,7 +4,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative flex w-full min-h-screen flex-col items-center bg-[#e7ffe9] pb-24 pt-16 md:pt-24 overflow-hidden"
+      className="relative flex w-full min-h-screen flex-col items-center bg-[#effff0] pb-24 pt-16 md:pt-24 overflow-hidden"
     >
       <div
         className="paper-grain absolute inset-0 z-0 pointer-events-none opacity-60"
@@ -154,51 +154,36 @@ export function ContactSection() {
             </motion.a>
           </motion.div>
 
-          {/* LADO DIREITO: formulário estilo cartinha escrita à mão */}
+        {/* LADO DIREITO: folha de carta simples, flutuando sobre o fundo */}
           <motion.div
-            initial={{ opacity: 0, y: 30, rotate: 1 }}
-            whileInView={{ opacity: 1, y: 0, rotate: 1 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            whileHover={{ rotate: 0 }}
-            transition={{ type: "spring", stiffness: 90, damping: 14 }}
             className="w-full lg:w-1/2 relative"
           >
-            {/* "Folha" de carta com textura de papel */}
-            <div className="paper-grain relative bg-[#ffffff] rounded-sm shadow-xl border border-black/5 p-8 md:p-10 overflow-hidden">
-            <div
-                className="absolute inset-0 pointer-events-none z-[1]"
-                style={{
-                  backgroundColor: "var(--color-butter-deep)",
-                  opacity: 0.12,
-                  mixBlendMode: "multiply",
-                }}
-                aria-hidden="true"
-              />
-              {/* Furinhos de caderno na lateral esquerda */}
-              <div className="absolute left-3 top-8 bottom-8 flex flex-col justify-between z-[2]">
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <span
-                    key={i}
-                    className="w-2.5 h-2.5 rounded-full bg-[#e7ffe9] shadow-inner border border-black/5"
-                  />
-                ))}
+            <motion.div
+              whileHover={{ y: -4 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              className="relative bg-[#fffefb] rounded-2xl shadow-lg border border-black/5 overflow-hidden"
+            >
+              {/* Faixa colorida no topo, tipo cabeçalho de carta */}
+              <div className="bg-[var(--color-mint-deep)]/25 px-8 md:px-9 py-5 flex items-center justify-between">
+                <p className="font-hand text-3xl text-ink">
+                  Envie sua mensagem!
+                </p>
+                <motion.span
+                  animate={{ rotate: [0, -8, 8, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  className="text-2xl"
+                >
+                  💌
+                </motion.span>
               </div>
-
-              {/* Selinho decorativo no canto, tipo carta antiga */}
-              <motion.div
-                initial={{ rotate: -12, scale: 0 }}
-                whileInView={{ rotate: -12, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-                className="absolute top-5 right-6 w-14 h-14 rounded-full border-2 border-dashed border-[var(--color-butter-deep)] flex items-center justify-center text-2xl"
-              >
-                💌
-              </motion.div>
 
               <form
                 action="https://formsubmit.co/SEU_EMAIL_AQUI@gmail.com"
                 method="POST"
-                className="flex flex-col gap-5 pl-8 relative z-10"
+                className="flex flex-col gap-5 p-8 md:p-9"
               >
                 <input
                   type="hidden"
@@ -207,40 +192,31 @@ export function ContactSection() {
                 />
                 <input type="hidden" name="_captcha" value="false" />
 
-                <p className="font-hand text-3xl text-ink mb-1">
-                  Envie sua carta!
-                </p>
-
-                {/* Nome — escrito numa "linha" de caderno */}
-                <div className="flex items-baseline gap-2">
-                  <label className="font-hand text-xl text-ink/70 shrink-0">
+                <div className="flex flex-col gap-2">
+                  <label className="font-hand text-xl text-ink/70">
                     Seu nome:
                   </label>
                   <input
                     type="text"
                     name="name"
                     required
-                    placeholder="..."
-                    className="flex-1 bg-transparent border-b-2 border-dashed border-ink/25 outline-none focus:border-[var(--color-butter-deep)] transition-colors font-hand text-xl text-ink px-1 py-1 placeholder:text-ink/20"
+                    className="bg-transparent border-b-2 border-dashed border-ink/25 outline-none focus:border-[var(--color-mint-deep)] transition-colors font-hand text-xl text-ink px-1 py-1.5"
                   />
                 </div>
 
-                {/* Email — mesma lógica de linha */}
-                <div className="flex items-baseline gap-2">
-                  <label className="font-hand text-xl text-ink/70 shrink-0">
+                <div className="flex flex-col gap-2">
+                  <label className="font-hand text-xl text-ink/70">
                     Seu e-mail:
                   </label>
                   <input
                     type="email"
                     name="email"
                     required
-                    placeholder="seuemail@..."
-                    className="flex-1 bg-transparent border-b-2 border-dashed border-ink/25 outline-none focus:border-[var(--color-butter-deep)] transition-colors font-hand text-xl text-ink px-1 py-1 placeholder:text-ink/20"
+                    className="bg-transparent border-b-2 border-dashed border-ink/25 outline-none focus:border-[var(--color-mint-deep)] transition-colors font-hand text-xl text-ink px-1 py-1.5"
                   />
                 </div>
 
-                {/* Mensagem — papel pautado de verdade */}
-                <div className="flex flex-col gap-2 mt-2">
+                <div className="flex flex-col gap-2 mt-1">
                   <label className="font-hand text-xl text-ink/70">
                     Sua mensagem:
                   </label>
@@ -252,7 +228,7 @@ export function ContactSection() {
                     className="bg-transparent outline-none font-hand text-xl text-ink leading-[2.4rem] resize-none placeholder:text-ink/20"
                     style={{
                       backgroundImage:
-                        "repeating-linear-gradient(transparent, transparent 2.35rem, rgba(0,0,0,0.12) 2.35rem, rgba(0,0,0,0.12) calc(2.35rem + 1.5px))",
+                        "repeating-linear-gradient(transparent, transparent 2.35rem, rgba(0,0,0,0.1) 2.35rem, rgba(0,0,0,0.1) calc(2.35rem + 1.5px))",
                       backgroundPositionY: "2.3rem",
                     }}
                   />
@@ -262,28 +238,32 @@ export function ContactSection() {
                   whileHover={{ scale: 1.04, rotate: -1 }}
                   whileTap={{ scale: 0.95 }}
                   type="submit"
-                  className="mt-3 self-start bg-ink text-white font-hand text-xl px-8 py-3 rounded-full shadow-md hover:bg-[var(--color-butter-deep)] hover:text-ink transition-colors flex items-center gap-2"
+                  className="mt-2 self-start bg-ink text-white font-hand text-xl px-8 py-3 rounded-full shadow-md hover:bg-[var(--color-mint-deep)] transition-colors flex items-center gap-2"
                 >
                   Enviar
                   <motion.span
-                    animate={{ rotate: [0, -10, 10, 0] }}
-                    transition={{
-                      duration: 1.6,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    🖋️
+                    ✈️
                   </motion.span>
                 </motion.button>
               </form>
-            </div>
+            </motion.div>
 
-            {/* Sombra de "papel dobrado" atrás da carta */}
-            <div className="absolute -bottom-2 left-4 right-4 h-full bg-black/5 rounded-sm -z-10 rotate-[-1deg]" />
+            {/* Sombra suave no chão */}
+            <div className="absolute -bottom-3 left-6 right-6 h-6 bg-black/10 blur-lg rounded-full -z-10" />
           </motion.div>
         </div>
+        
       </div>
+      {/* FOOTER / COPYRIGHT */}
+        <div className="absolute bottom-0 left-0 w-full py-6 flex justify-center border-t border-black/5 bg-[#effff0]">
+          <p className="font-sans text-sm text-ink-soft">
+            © {new Date().getFullYear()} Patrícia Philippsen Gabriel. Todos os direitos reservados.
+          </p>
+        </div>
+      
     </section>
   );
 }
