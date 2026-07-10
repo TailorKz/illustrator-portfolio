@@ -6,11 +6,12 @@ import { ProjectFilter } from "./ProjectFilter";
 import { ProjectModal } from "./ProjectModal";
 import { TornEdge } from "./TornEdge";
 import { FloatingIcon } from "./FloatingIcon";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const decorativeImages = [
   { 
     src: "/girassol.webp", 
-    top: "250px", // Ancorado de forma fixa!
+    top: "250px",
     left: "4%", 
     size: "w-20 md:w-38", 
     opacity: "opacity-80", 
@@ -85,7 +86,7 @@ const decorativeImages = [
   },
 ];
 
-function PillButton ({ onClick, label, className = "" }: { onClick: () => void; label: string; className?: string; }) {
+function PillButton({ onClick, label, className = "" }: { onClick: () => void; label: string; className?: string; }) {
   const [hovered, setHovered] = useState(false);
   return (
     <button onClick={onClick} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className={`group relative inline-flex cursor-pointer items-center gap-2 px-8 py-3 font-sans text-sm font-bold uppercase tracking-widest text-ink transition-colors duration-300 group-hover:text-pink ${className}`}>
@@ -100,12 +101,12 @@ function PillButton ({ onClick, label, className = "" }: { onClick: () => void; 
   );
 }
 
-function SeeMoreLink({ onClick }: { onClick: () => void }) {
+function SeeMoreLink({ onClick, label }: { onClick: () => void; label: string; }) {
   const [hovered, setHovered] = useState(false);
   return (
     <motion.button onClick={onClick} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} whileHover={{ y: -3 }} whileTap={{ scale: 0.96 }} className="group flex items-center gap-4 cursor-pointer">
       <span className="relative font-hand text-3xl text-ink transition-colors duration-300 group-hover:text-pink md:text-4xl">
-        Veja mais projetos
+        {label}
         <svg className="pointer-events-none absolute -bottom-1 left-0 h-3 w-full overflow-visible" viewBox="0 0 240 14" preserveAspectRatio="none">
           <motion.path d="M3 8C45 3 95 11 140 6C175 2 205 10 236 6" fill="none" stroke="var(--color-pink)" strokeWidth="3" strokeLinecap="round" initial={false} animate={{ pathLength: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }} transition={{ duration: 0.45, ease: "easeOut" }} />
         </svg>
@@ -119,10 +120,10 @@ function SeeMoreLink({ onClick }: { onClick: () => void }) {
   );
 }
 
-function SectionTitle() {
+function SectionTitle({ title }: { title: string }) {
   return (
     <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: "easeOut" }} className="relative inline-block mb-4">
-      <h2 className="font-hand text-4xl text-ink md:text-6xl">Projects</h2>
+      <h2 className="font-hand text-4xl text-ink md:text-6xl">{title}</h2>
       <motion.svg className="absolute -bottom-2 left-0 h-3 w-[85%]" viewBox="0 0 200 16" fill="none" stroke="var(--color-pink)" strokeWidth="4" strokeLinecap="round" preserveAspectRatio="none">
         <motion.path d="M4 10C24 4 40 13 60 8C82 3 96 12 116 7C138 2 152 11 172 6C182 4 190 7 196 6" initial={{ pathLength: 0, opacity: 0 }} whileInView={{ pathLength: 1, opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.4, duration: 0.7, ease: "easeInOut" }} />
       </motion.svg>
@@ -131,6 +132,7 @@ function SectionTitle() {
 }
 
 export function ProjectsSection({ onSeeAll }: { onSeeAll: () => void }) {
+  const { t } = useLanguage();
   const [activeTag, setActiveTag] = useState("Principais");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
@@ -156,9 +158,9 @@ export function ProjectsSection({ onSeeAll }: { onSeeAll: () => void }) {
       </AnimatePresence>
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-4 flex flex-col items-start">
-        <SectionTitle />
+        <SectionTitle title={t.projects.title} />
         <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="mt-5 rounded-lg bg-white/70 px-4 py-2 font-hand text-lg text-ink-soft shadow-sm">
-          Uma seleção dos principais trabalhos.
+          {t.projects.subtitle}
         </motion.p>
       </div>
 
@@ -167,7 +169,7 @@ export function ProjectsSection({ onSeeAll }: { onSeeAll: () => void }) {
       </div>
 
       <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }} className="relative z-10 mt-6">
-        <PillButton onClick={onSeeAll} label="Ver todos" />
+        <PillButton onClick={onSeeAll} label={t.projects.seeAll} />
       </motion.div>
 
       {/* MASONRY NATIVO E PERFEITO: 3 colunas para distribuir as 9 imagens perfeitamente */}
@@ -186,11 +188,11 @@ export function ProjectsSection({ onSeeAll }: { onSeeAll: () => void }) {
       </div>
 
       <div className="relative z-10 mt-16 flex w-full justify-center">
-        <SeeMoreLink onClick={onSeeAll} />
+        <SeeMoreLink onClick={onSeeAll} label={t.projects.seeMore} />
       </div>
 
       {filtered.length === 0 && (
-        <p className="relative z-10 mt-10 font-sans text-sm text-ink-soft">Nenhum projeto com esse estilo ainda — em breve!</p>
+        <p className="relative z-10 mt-10 font-sans text-sm text-ink-soft">{t.projects.noneFound}</p>
       )}
 
       <TornEdge bottomColor="#fffedf" />

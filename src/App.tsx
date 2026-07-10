@@ -10,6 +10,7 @@ import { LoadingScreen } from "./components/LoadingScreen";
 import { AllProjectsPage } from "./components/AllProjectsPage";
 import { AboutSection } from "./components/AboutSection";
 import { ContactSection } from "./components/ContactSection";
+import { LanguageSwitcher } from "./components/LanguageSwitcher";
 
 const PRELOAD_IMAGES = [
   "/estrelas1.png", "/estrelas2.png", "/folha.png", "/canetas.png",
@@ -50,7 +51,7 @@ function App() {
       </AnimatePresence>
 
       <CursorSparkles />
-      
+      <LanguageSwitcher />
       <Navbar onNavigate={() => setCurrentPage("home")} />
 
       {/* Ícones flutuantes decorativos globais */}

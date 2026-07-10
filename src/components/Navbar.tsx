@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const tabs = [
-  { id: "welcome", label: "Welcome", icon: "✿", color: "#f9a8c9" },
-  { id: "projects", label: "Projects", icon: "✎", color: "#ffcc85" },
-  { id: "about", label: "About", icon: "☺", color: "#f7f037" },
-  { id: "contact", label: "Contact", icon: "✉", color: "#b0ffb7" },
+  { id: "welcome", icon: "✿", color: "#f9a8c9" },
+  { id: "projects", icon: "✎", color: "#ffcc85" },
+  { id: "about", icon: "☺", color: "#f7f037" },
+  { id: "contact", icon: "✉", color: "#b0ffb7" },
 ];
 
 export function Navbar({ onNavigate }: { onNavigate?: () => void }) {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<string | null>("welcome");
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
@@ -124,7 +126,7 @@ export function Navbar({ onNavigate }: { onNavigate?: () => void }) {
                 {tab.icon}
               </motion.span>
 
-              {tab.label}
+              {t.navbar[tab.id as keyof typeof t.navbar]}
             </motion.li>
           );
         })}

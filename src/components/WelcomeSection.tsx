@@ -3,10 +3,11 @@ import { useEffect } from "react";
 import { TornEdge } from "./TornEdge";
 import { FloatingIcon } from "./FloatingIcon";
 import { FlowerIcon, SparkleIcon, PenIcon, PaletteIcon } from "./Icons";
+import { useLanguage } from "../contexts/LanguageContext";
 
 // Recebemos a prop isLoading
 export function WelcomeSection({ isLoading }: { isLoading?: boolean }) {
-  // Controlador global das animações
+  const { t } = useLanguage();
   const controls = useAnimation();
 
   useEffect(() => {
@@ -233,7 +234,7 @@ export function WelcomeSection({ isLoading }: { isLoading?: boolean }) {
               }}
               className="shine-text inline-block font-['Parisienne',_cursive] text-7xl md:text-[100px] leading-[1.4] px-4 md:px-6 py-2 md:py-3 -translate-y-[10px] md:-translate-y-[15px] -mb-6 md:-mb-9"
             >
-              welcome
+              {t.home.greeting}
             </motion.h2>
             <motion.p
   initial="hidden"
@@ -241,7 +242,7 @@ export function WelcomeSection({ isLoading }: { isLoading?: boolean }) {
   variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { delay: 0.7 } } }}
   className="font-['Parisienne',_cursive] text-3xl md:text-5xl text-gray-700 mb-1 mt-2"
 >
-  to my
+  {t.home.subtitle}
 </motion.p>
 
   <motion.div
@@ -259,7 +260,7 @@ export function WelcomeSection({ isLoading }: { isLoading?: boolean }) {
   className="relative flex flex-col items-center mt-2 md:mt-4"
 >
   <h1 className="font-['Kaushan_Script',_cursive] text-[80px] md:text-[130px] leading-none text-[var(--color-ink)] tracking-tight flex">
-    {"Portfolio".split("").map((letter, i) => (
+    {t.home.title.split("").map((letter, i) => (
       <motion.span
         key={i}
         variants={{

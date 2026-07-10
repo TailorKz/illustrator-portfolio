@@ -176,3 +176,10 @@
     transform: translate(-50%, -70%) scale(0.35);
   }
 }
+
+.clip-triangle-left {
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+.clip-triangle-right {
+  clip-path: polygon(100% 100%, 100% 0, 0 100%);
+}
