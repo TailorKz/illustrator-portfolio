@@ -24,10 +24,13 @@ export function AllProjectsPage({ onBack }: { onBack: () => void }) {
   );
 
   return (
-    <div className="relative min-h-screen bg-[var(--color-beige)] pt-12 md:pt-20 pb-20 px-4 w-full">
+    <div className="relative min-h-screen bg-[#f2e8da] pt-28 md:pt-32 pb-20 px-4 w-full">
       <AnimatePresence>
         {selectedProject && (
-          <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+          <ProjectModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
         )}
       </AnimatePresence>
 
@@ -36,10 +39,12 @@ export function AllProjectsPage({ onBack }: { onBack: () => void }) {
           onClick={onBack}
           className="group flex items-center gap-2 text-pink-500 hover:text-pink-600 transition-colors mb-8 font-bold tracking-widest uppercase text-sm cursor-pointer"
         >
-          <span className="group-hover:-translate-x-1 transition-transform">←</span>
+          <span className="group-hover:-translate-x-1 transition-transform">
+            ←
+          </span>
           Voltar para o Início
         </button>
-        
+
         <h1 className="font-hand text-6xl md:text-8xl text-ink">
           Todos os Projetos
           <div className="mt-2 h-1 w-48 rounded-full bg-pink" />
@@ -53,11 +58,10 @@ export function AllProjectsPage({ onBack }: { onBack: () => void }) {
         <ProjectFilter tags={tags} active={activeTag} onChange={setActiveTag} />
       </div>
 
-      {/* A SOLUÇÃO MASONRY NATIVA E PERFEITA (4 Colunas) */}
-      <div className="mx-auto w-full max-w-6xl pt-3 columns-1 sm:columns-2 lg:columns-4 gap-6">
+      <div className="mx-auto w-full max-w-6xl pt-3 px-1 md:px-0 columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-6">
         <AnimatePresence mode="popLayout">
           {filtered.map((project, index) => (
-            <div key={project.id} className="break-inside-avoid mb-6">
+            <div key={project.id} className="break-inside-avoid mb-6 pt-5">
               <ProjectCard
                 project={project}
                 index={index}

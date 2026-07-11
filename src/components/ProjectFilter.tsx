@@ -1,5 +1,3 @@
-// src/components/ProjectFilter.tsx
-
 import { motion } from "framer-motion";
 
 type ProjectFilterProps = {
@@ -10,7 +8,7 @@ type ProjectFilterProps = {
 
 export function ProjectFilter({ tags, active, onChange }: ProjectFilterProps) {
   return (
-    <div className="scrollbar-hide mb-10 flex w-full max-w-6xl gap-2 overflow-x-auto px-4">
+    <div className="mb-10 flex w-full max-w-6xl gap-2 flex-wrap justify-center px-4">
       {tags.map((tag) => {
         const isActive = tag === active;
         return (

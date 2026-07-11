@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export function ContactSection() {
+  const { t } = useLanguage();
   return (
     <section
       id="contact"
@@ -20,7 +22,7 @@ export function ContactSection() {
           className="text-center mb-16 relative"
         >
           <h2 className="font-hand text-6xl md:text-7xl text-[var(--color-ink)] mb-4 relative inline-block">
-            Entre em Contato!
+            {t.contato.contato}
             <motion.svg
               viewBox="0 0 300 20"
               className="absolute -bottom-2 left-0 w-full h-4"
@@ -39,13 +41,12 @@ export function ContactSection() {
             </motion.svg>
           </h2>
           <p className="font-sans text-ink-soft max-w-md mx-auto mt-4">
-            Tem um projeto em mente, quer fazer uma encomenda ou apenas dar um
-            oi? Me mande uma mensagem!
+            {t.contato.contatotexto}
           </p>
         </motion.div>
 
         <div className="flex flex-col lg:flex-row w-full gap-14 lg:gap-10 items-start justify-center">
-          {/* LADO ESQUERDO: "murinho" de cartõezinhos com fita adesiva */}
+          {/* LADO ESQUERDO */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -53,7 +54,7 @@ export function ContactSection() {
             className="flex flex-col gap-7 w-full lg:w-1/3 pt-2"
           >
             <h3 className="font-hand text-4xl text-ink mb-1">
-              Me encontre por aqui!
+              {t.contato.encontre}
             </h3>
 
             {/* Cartão Instagram */}
@@ -86,9 +87,7 @@ export function ContactSection() {
                 <p className="font-hand text-lg text-ink leading-none mb-0.5">
                   Instagram
                 </p>
-                <span className="font-sans text-xs text-ink/50">
-                  @patynete
-                </span>
+                <span className="font-sans text-xs text-ink/50">@patynete</span>
               </div>
             </motion.a>
 
@@ -116,7 +115,9 @@ export function ContactSection() {
                 <p className="font-hand text-lg text-ink leading-none mb-0.5">
                   LinkedIn
                 </p>
-                <span className="font-sans text-xs text-ink/50">Patrícia Philippsen Gabriel</span>
+                <span className="font-sans text-xs text-ink/50">
+                  Patrícia Philippsen Gabriel
+                </span>
               </div>
             </motion.a>
 
@@ -154,7 +155,7 @@ export function ContactSection() {
             </motion.a>
           </motion.div>
 
-        {/* LADO DIREITO: folha de carta simples, flutuando sobre o fundo */}
+          {/* LADO DIREITO */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -166,14 +167,17 @@ export function ContactSection() {
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
               className="relative bg-[#fffefb] rounded-2xl shadow-lg border border-black/5 overflow-hidden"
             >
-              {/* Faixa colorida no topo, tipo cabeçalho de carta */}
               <div className="bg-[var(--color-mint-deep)]/25 px-8 md:px-9 py-5 flex items-center justify-between">
                 <p className="font-hand text-3xl text-ink">
-                  Envie sua mensagem!
+                  {t.contato.mensagem}
                 </p>
                 <motion.span
                   animate={{ rotate: [0, -8, 8, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                   className="text-2xl"
                 >
                   💌
@@ -181,7 +185,7 @@ export function ContactSection() {
               </div>
 
               <form
-                action="https://formsubmit.co/SEU_EMAIL_AQUI@gmail.com"
+                action="https://formsubmit.co/patriciapg.ipo@gmail.com"
                 method="POST"
                 className="flex flex-col gap-5 p-8 md:p-9"
               >
@@ -190,23 +194,21 @@ export function ContactSection() {
                   name="_subject"
                   value="Novo contato pelo Portfólio!"
                 />
+
+                {/* Desativa o Captcha*/}
                 <input type="hidden" name="_captcha" value="false" />
 
-                <div className="flex flex-col gap-2">
-                  <label className="font-hand text-xl text-ink/70">
-                    Seu nome:
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    className="bg-transparent border-b-2 border-dashed border-ink/25 outline-none focus:border-[var(--color-mint-deep)] transition-colors font-hand text-xl text-ink px-1 py-1.5"
-                  />
-                </div>
+                <input type="hidden" name="_template" value="box" />
+
+                <input
+                  type="hidden"
+                  name="_next"
+                  value="https://patynete.netlify.app/"
+                />
 
                 <div className="flex flex-col gap-2">
                   <label className="font-hand text-xl text-ink/70">
-                    Seu e-mail:
+                    {t.contato.email}
                   </label>
                   <input
                     type="email"
@@ -218,13 +220,13 @@ export function ContactSection() {
 
                 <div className="flex flex-col gap-2 mt-1">
                   <label className="font-hand text-xl text-ink/70">
-                    Sua mensagem:
+                    {t.contato.textocarta}
                   </label>
                   <textarea
                     name="message"
                     rows={5}
                     required
-                    placeholder="escreve aqui sua ideia, projeto ou só um oi :)"
+                    placeholder={t.contato.placeholder}
                     className="bg-transparent outline-none font-hand text-xl text-ink leading-[2.4rem] resize-none placeholder:text-ink/20"
                     style={{
                       backgroundImage:
@@ -240,10 +242,14 @@ export function ContactSection() {
                   type="submit"
                   className="mt-2 self-start bg-ink text-white font-hand text-xl px-8 py-3 rounded-full shadow-md hover:bg-[var(--color-mint-deep)] transition-colors flex items-center gap-2"
                 >
-                  Enviar
+                  {t.contato.enviar}
                   <motion.span
                     animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{
+                      duration: 1.4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                   >
                     ✈️
                   </motion.span>
@@ -255,15 +261,13 @@ export function ContactSection() {
             <div className="absolute -bottom-3 left-6 right-6 h-6 bg-black/10 blur-lg rounded-full -z-10" />
           </motion.div>
         </div>
-        
       </div>
       {/* FOOTER / COPYRIGHT */}
-        <div className="absolute bottom-0 left-0 w-full py-6 flex justify-center border-t border-black/5 bg-[#effff0]">
-          <p className="font-sans text-sm text-ink-soft">
-            © {new Date().getFullYear()} Patrícia Philippsen Gabriel. Todos os direitos reservados.
-          </p>
-        </div>
-      
+      <div className="absolute bottom-0 left-0 w-full py-4 md:py-6 flex justify-center border-t border-black/5 bg-[#effff0]">
+        <p className="font-sans text-sm text-ink-soft">
+          © {new Date().getFullYear()} {t.contato.copy}
+        </p>
+      </div>
     </section>
   );
 }

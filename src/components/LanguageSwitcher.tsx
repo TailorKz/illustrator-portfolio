@@ -23,11 +23,15 @@ export function LanguageSwitcher() {
   };
 
   return (
-    <div ref={menuRef} className="fixed top-6 right-6 md:right-10 z-[100]">
+    <div
+      id="language-switcher"
+      ref={menuRef}
+      className="fixed z-[100] transition-opacity duration-300 origin-top-right top-6 right-6 md:right-10 max-[540px]:top-20 max-[540px]:right-4 max-[540px]:scale-[0.85]"
+    >
       <motion.div
         initial={false}
         animate={{
-          height: isOpen ? 112 : 56, 
+          height: isOpen ? 112 : 56,
         }}
         className="w-14 bg-white/90 backdrop-blur-md rounded-xl shadow-[0_4px_14px_rgba(0,0,0,0.08)] border border-black/5 overflow-hidden flex flex-col"
       >
@@ -57,15 +61,14 @@ export function LanguageSwitcher() {
   );
 }
 
-// --- COMPONENTES VISUAIS DAS BANDEIRAS (Usando Imagens Infalíveis) ---
 
 function FlagBR() {
   return (
     <>
       <div className="relative w-[32px] h-[22px] rounded-[3px] overflow-hidden drop-shadow-sm">
-        <img 
-          src="https://flagcdn.com/br.svg" 
-          alt="Bandeira do Brasil" 
+        <img
+          src="https://flagcdn.com/br.svg"
+          alt="Bandeira do Brasil"
           className="w-full h-full object-cover"
         />
       </div>
@@ -79,16 +82,16 @@ function FlagEN() {
     <>
       <div className="relative w-[32px] h-[22px] rounded-[3px] overflow-hidden drop-shadow-sm">
         {/* Bandeira UK no fundo (Aparece na metade inferior direita) */}
-        <img 
-          src="https://flagcdn.com/gb.svg" 
-          alt="Bandeira Reino Unido" 
+        <img
+          src="https://flagcdn.com/gb.svg"
+          alt="Bandeira Reino Unido"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        
+
         {/* Bandeira EUA por cima (Cortada na diagonal para aparecer só na metade superior esquerda) */}
-        <img 
-          src="https://flagcdn.com/us.svg" 
-          alt="Bandeira Estados Unidos" 
+        <img
+          src="https://flagcdn.com/us.svg"
+          alt="Bandeira Estados Unidos"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }}
         />

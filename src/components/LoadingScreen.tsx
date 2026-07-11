@@ -1,13 +1,5 @@
 import { motion, type Variants } from "framer-motion";
 
-/* ==========================================================================
-   🖊️  ASSINATURA "PATY NETE" — duas linhas dentro do quadrado
-   --------------------------------------------------------------------------
-   Os 32 traços originais foram reagrupados em 8 letras com base na posição
-   (x/y) de cada um. O "N" já tava confirmado pelo seu comentário original;
-   os outros eu inferi pela geometria — dá uma conferida visual rápida e
-   me avisa se algum traço ficou na letra errada.
-   ========================================================================== */
 
 const framePath =
   "M26.2204 931H127.72L483.72 930.5H575.22H600.22H604.22L606.72 928.5L608.72 926V921.5V67V15L607.22 11L605.22 8.5H598.22H237.22H59.2205H11.7205L8.72037 11V15.5V754.5C8.55371 807.167 8.32037 914.5 8.72037 922.5C9.12037 930.5 13.5537 931.5 15.7204 931H26.2204Z";
@@ -97,9 +89,6 @@ const letterGroups: LetterGroup[] = [
   },
 ];
 
-/* ==========================================================================
-   ⏱️  TIMING — quadrado desenha, depois cada letra desenha e "assenta"
-   ========================================================================== */
 
 // Ajuste aqui se precisar acelerar/desacelerar tudo de uma vez
 const FRAME_DELAY = 0.02;
@@ -159,7 +148,7 @@ const confetti = Array.from({ length: 10 }, (_, i) => ({
   rotate: Math.random() * 360,
 }));
 
-// Brilhinhos piscando pelo fundo
+// Brilhos piscando pelo fundo
 const sparkles = Array.from({ length: 14 }, (_, i) => ({
   id: i,
   top: `${Math.random() * 100}%`,
@@ -180,13 +169,12 @@ function Bee() {
       initial={{ opacity: 0 }}
       animate={{
         opacity: [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-        // Curva da direita "encurtada" (o máximo agora é 56% em vez de 64%)
         left: [
-          "36%", "45%", "52%", "56%", "48%", 
+          "36%", "45%", "52%", "56%", "48%",
           "42%", "34%", "28%", "30%", "36%"
         ],
         top: [
-          "56%", "46%", "44%", "50%", "58%", 
+          "56%", "46%", "44%", "50%", "58%",
           "62%", "58%", "50%", "48%", "56%"
         ],
         rotate: [15, 25, 10, -15, -25, -15, -5, 15, 25, 15],

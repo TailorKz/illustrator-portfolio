@@ -13,22 +13,36 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
   // Trava o scroll E oculta a Navbar enquanto o modal estiver aberto
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    
-    // Ocultando a Navbar suavemente
+
+    // Navbar e o Botão de Idioma
     const navbar = document.querySelector("nav");
+    const langSwitcher = document.getElementById("language-switcher");
+
     if (navbar) {
       navbar.style.opacity = "0";
       navbar.style.pointerEvents = "none";
       navbar.style.transition = "opacity 0.3s ease";
     }
 
+    // Ocultando o Language Switcher
+    if (langSwitcher) {
+      langSwitcher.style.opacity = "0";
+      langSwitcher.style.pointerEvents = "none";
+    }
+
     return () => {
       document.body.style.overflow = "unset";
-      
+
       // Trazendo a Navbar de volta ao fechar
       if (navbar) {
         navbar.style.opacity = "1";
         navbar.style.pointerEvents = "auto";
+      }
+
+      // Trazendo o Language Switcher de volta
+      if (langSwitcher) {
+        langSwitcher.style.opacity = "1";
+        langSwitcher.style.pointerEvents = "auto";
       }
     };
   }, []);
@@ -62,22 +76,22 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </button>
 
           <div className="relative z-10 flex flex-col md:flex-row h-full overflow-hidden">
-            
+
             {/* LADO ESQUERDO: ÁREA DA IMAGEM COM BLUR */}
             <div className="relative w-full md:w-[55%] flex flex-col items-center justify-center bg-zinc-900 overflow-hidden min-h-[40vh] md:min-h-full">
-              
+
               {(project.fullImage || project.image) && (
-                <div 
+                <div
                   className="absolute inset-0 opacity-40 bg-cover bg-center transform scale-110"
-                  style={{ 
-                    backgroundImage: `url(${project.fullImage || project.image})`, 
-                    filter: 'blur(40px)' 
+                  style={{
+                    backgroundImage: `url(${project.fullImage || project.image})`,
+                    filter: 'blur(40px)'
                   }}
                 />
               )}
 
               {project.fullImage || project.image ? (
-                <motion.div 
+                <motion.div
                   className="relative z-10 w-full h-full flex flex-col items-center justify-center p-8 cursor-zoom-in group"
                   onClick={() => setIsZoomed(true)}
                   whileHover={{ scale: 1.02 }}
@@ -89,7 +103,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                       alt={project.title}
                       className="max-h-[50vh] md:max-h-[70vh] w-auto object-contain drop-shadow-2xl rounded-sm"
                     />
-                    
+
                     {/* Overlay de Lupa */}
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-sm flex flex-col items-center justify-center backdrop-blur-[2px]">
                       <svg className="w-12 h-12 text-white/90 drop-shadow-lg" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -110,16 +124,16 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             {/* LADO DIREITO: ÁREA DE TEXTOS */}
             <div className="w-full md:w-[45%] p-8 md:p-12 flex flex-col bg-[#fffaf6] overflow-y-auto scrollbar-hide relative">
                <div className="paper-grain absolute inset-0 z-0 pointer-events-none opacity-40" />
-               
+
                <div className="relative z-10 flex flex-col h-full">
                   <span className="text-pink-500 font-sans font-bold tracking-widest text-xs uppercase mb-2">
                     {project.category} • {project.year}
                   </span>
-                  
+
                   <h2 className="font-hand text-5xl md:text-6xl text-ink leading-[1.1] mb-6">
                     {project.title}
                   </h2>
-                  
+
                   <p className="font-sans text-ink-soft text-base leading-relaxed mb-8 flex-grow">
                     {project.description || "Nenhuma descrição fornecida para esta arte ainda. Mas você pode adicionar os detalhes sobre o processo criativo, ferramentas utilizadas e a inspiração por trás dela!"}
                   </p>
@@ -154,7 +168,6 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               </svg>
             </button>
 
-            {/* Imagem (Limitamos a altura para sobrar espaço para o botão) */}
             <motion.img
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -165,7 +178,6 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               className="w-full h-[80vh] md:h-[85vh] object-contain drop-shadow-2xl select-none"
             />
 
-            {/* Botão Temático Inferior */}
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

@@ -9,80 +9,80 @@ import { FloatingIcon } from "./FloatingIcon";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const decorativeImages = [
-  { 
-    src: "/girassol.webp", 
+  {
+    src: "/girassol.webp",
     top: "250px",
-    left: "4%", 
-    size: "w-20 md:w-38", 
-    opacity: "opacity-80", 
-    duration: 7, 
-    rotate: -6, 
-    driftX: 6, 
-    driftY: -8, 
-    className: "hidden lg:block z-0" 
+    left: "4%",
+    size: "w-20 md:w-38",
+    opacity: "opacity-80",
+    duration: 7,
+    rotate: -6,
+    driftX: 6,
+    driftY: -8,
+    className: "hidden lg:block z-0"
   },
-  { 
-    src: "/borboleta.webp", 
-    top: "480px", 
-    right: "2%", 
-    size: "w-14 md:w-30", 
-    opacity: "opacity-80", 
-    duration: 5.5, 
-    rotate: 8, 
-    driftX: -6, 
-    driftY: 8, 
-    delay: 0.3, 
-    className: "hidden md:block z-0" 
+  {
+    src: "/borboleta.webp",
+    top: "480px",
+    right: "2%",
+    size: "w-14 md:w-30",
+    opacity: "opacity-80",
+    duration: 5.5,
+    rotate: 8,
+    driftX: -6,
+    driftY: 8,
+    delay: 0.3,
+    className: "hidden md:block z-0"
   },
-  { 
-    src: "/bee.webp", 
-    bottom: "450px", // Substituiu o bottom!
-    left: "5%", 
-    size: "w-20 md:w-24", 
-    opacity: "opacity-75", 
-    duration: 6.5, 
-    rotate: -4, 
-    driftX: 5, 
-    driftY: 10, 
-    className: "hidden lg:block z-0 -scale-x-100 -rotate-12" 
+  {
+    src: "/bee.webp",
+    bottom: "450px",
+    left: "5%",
+    size: "w-20 md:w-24",
+    opacity: "opacity-75",
+    duration: 6.5,
+    rotate: -4,
+    driftX: 5,
+    driftY: 10,
+    className: "hidden lg:block z-0 -scale-x-100 -rotate-12"
   },
-  { 
-    src: "/tulipaslaranjas.webp", 
-    bottom: "200px", // Substituiu o bottom!
-    right: "3%", 
-    size: "w-16 md:w-24", 
-    opacity: "opacity-70", 
-    duration: 8, 
-    rotate: 5, 
-    driftX: -8, 
-    driftY: -6, 
-    delay: 0.6, 
-    className: "hidden md:block z-0" 
+  {
+    src: "/tulipaslaranjas.webp",
+    bottom: "200px",
+    right: "3%",
+    size: "w-16 md:w-24",
+    opacity: "opacity-70",
+    duration: 8,
+    rotate: 5,
+    driftX: -8,
+    driftY: -6,
+    delay: 0.6,
+    className: "hidden md:block z-0"
   },
-  { 
-    src: "/coracao.webp", 
-    top: "900px", 
-    left: "15%", 
-    size: "w-12 md:w-16", 
-    opacity: "opacity-60", 
-    duration: 5, 
-    rotate: -10, 
-    driftX: 4, 
-    driftY: 6, 
-    className: "hidden xl:block z-0" 
+  {
+    src: "/coracao.webp",
+    top: "900px",
+    left: "15%",
+    size: "w-12 md:w-16",
+    opacity: "opacity-60",
+    duration: 5,
+    rotate: -10,
+    driftX: 4,
+    driftY: 6,
+    className: "hidden xl:block z-0"
   },
-  { 
-    src: "/florespequenas.webp", 
-    top: "80px", 
-    right: "6%", 
-    size: "w-14 md:w-20", 
-    opacity: "opacity-70", 
-    duration: 6, 
-    rotate: 6, 
-    driftX: -5, 
-    driftY: -8, 
-    delay: 0.4, 
-    className: "hidden lg:block z-0" 
+  {
+    src: "/florespequenas.webp",
+    top: "80px",
+    right: "6%",
+    size: "w-14 md:w-20",
+    opacity: "opacity-70",
+    duration: 6,
+    rotate: 6,
+    driftX: -5,
+    driftY: -8,
+    delay: 0.4,
+    className: "hidden lg:block z-0"
   },
 ];
 
@@ -122,10 +122,30 @@ function SeeMoreLink({ onClick, label }: { onClick: () => void; label: string; }
 
 function SectionTitle({ title }: { title: string }) {
   return (
-    <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: "easeOut" }} className="relative inline-block mb-4">
-      <h2 className="font-hand text-4xl text-ink md:text-6xl">{title}</h2>
-      <motion.svg className="absolute -bottom-2 left-0 h-3 w-[85%]" viewBox="0 0 200 16" fill="none" stroke="var(--color-pink)" strokeWidth="4" strokeLinecap="round" preserveAspectRatio="none">
-        <motion.path d="M4 10C24 4 40 13 60 8C82 3 96 12 116 7C138 2 152 11 172 6C182 4 190 7 196 6" initial={{ pathLength: 0, opacity: 0 }} whileInView={{ pathLength: 1, opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.4, duration: 0.7, ease: "easeInOut" }} />
+    <motion.div
+      initial={{ opacity: 0, x: -24 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="relative inline-block mb-4"
+    >
+      <h2 className="font-hand text-6xl md:text-7xl text-ink">{title}</h2>
+      <motion.svg
+        className="absolute -bottom-2 left-0 h-3 w-[85%]"
+        viewBox="0 0 200 16"
+        fill="none"
+        stroke="var(--color-pink)"
+        strokeWidth="4"
+        strokeLinecap="round"
+        preserveAspectRatio="none"
+      >
+        <motion.path
+          d="M4 10C24 4 40 13 60 8C82 3 96 12 116 7C138 2 152 11 172 6C182 4 190 7 196 6"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, duration: 0.7, ease: "easeInOut" }}
+        />
       </motion.svg>
     </motion.div>
   );
@@ -144,22 +164,56 @@ export function ProjectsSection({ onSeeAll }: { onSeeAll: () => void }) {
   }, [activeTag]);
 
   return (
-    <section id="projects" className="relative flex w-full min-h-screen flex-col items-center overflow-hidden bg-[var(--color-beige)] pb-20 pt-16 md:pt-24">
-      <div className="paper-grain pointer-events-none absolute inset-0 z-0" aria-hidden="true" />
-      
+    <section
+      id="projects"
+      className="relative flex w-full min-h-screen flex-col items-center overflow-hidden bg-[#f2e8da] pb-20 pt-16 md:pt-24"
+    >
+      <div
+        className="paper-grain pointer-events-none absolute inset-0 z-0"
+        aria-hidden="true"
+      />
+
       {decorativeImages.map((img, i) => (
-        <FloatingIcon key={i} top={img.top} left={img.left} right={img.right} bottom={img.bottom} duration={img.duration} rotate={img.rotate} driftX={img.driftX} driftY={img.driftY} delay={img.delay} className={img.className}>
-          <img src={img.src} alt={img.alt ?? ""} loading="lazy" className={`${img.size} ${img.opacity} object-contain drop-shadow-md`} />
+        <FloatingIcon
+          key={i}
+          top={img.top}
+          left={img.left}
+          right={img.right}
+          bottom={img.bottom}
+          duration={img.duration}
+          rotate={img.rotate}
+          driftX={img.driftX}
+          driftY={img.driftY}
+          delay={img.delay}
+          className={img.className}
+        >
+          <img
+            src={img.src}
+            alt=""
+            loading="lazy"
+            className={`${img.size} ${img.opacity} object-contain drop-shadow-md`}
+          />
         </FloatingIcon>
       ))}
 
       <AnimatePresence>
-        {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
+        {selectedProject && (
+          <ProjectModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        )}
       </AnimatePresence>
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-4 flex flex-col items-start">
         <SectionTitle title={t.projects.title} />
-        <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="mt-5 rounded-lg bg-white/70 px-4 py-2 font-hand text-lg text-ink-soft shadow-sm">
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="mt-5 rounded-lg bg-white/70 px-4 py-2 font-hand text-lg text-ink-soft shadow-sm"
+        >
           {t.projects.subtitle}
         </motion.p>
       </div>
@@ -168,19 +222,25 @@ export function ProjectsSection({ onSeeAll }: { onSeeAll: () => void }) {
         <ProjectFilter tags={tags} active={activeTag} onChange={setActiveTag} />
       </div>
 
-      <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }} className="relative z-10 mt-6">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.15 }}
+        className="relative z-10 mt-6"
+      >
         <PillButton onClick={onSeeAll} label={t.projects.seeAll} />
       </motion.div>
 
-      {/* MASONRY NATIVO E PERFEITO: 3 colunas para distribuir as 9 imagens perfeitamente */}
-      <div className="relative z-10 mx-auto mt-10 w-full max-w-6xl px-4 columns-1 sm:columns-2 lg:columns-3 gap-6">
+      <div className="relative z-10 mx-auto mt-10 w-full max-w-6xl px-4 columns-2 lg:columns-3 gap-6">
         <AnimatePresence mode="popLayout">
           {filtered.map((project, index) => (
-            <div key={project.id} className="break-inside-avoid mb-6">
-              <ProjectCard 
-                project={project} 
-                index={index} 
-                onClick={() => setSelectedProject(project)} 
+            <div key={project.id} className="break-inside-avoid mb-6 pt-5">
+              {/* Adicionamos pt-5 na div acima para proteger a fita/clipe */}
+              <ProjectCard
+                project={project}
+                index={index}
+                onClick={() => setSelectedProject(project)}
               />
             </div>
           ))}
@@ -192,7 +252,9 @@ export function ProjectsSection({ onSeeAll }: { onSeeAll: () => void }) {
       </div>
 
       {filtered.length === 0 && (
-        <p className="relative z-10 mt-10 font-sans text-sm text-ink-soft">{t.projects.noneFound}</p>
+        <p className="relative z-10 mt-10 font-sans text-sm text-ink-soft">
+          {t.projects.noneFound}
+        </p>
       )}
 
       <TornEdge bottomColor="#fffedf" />

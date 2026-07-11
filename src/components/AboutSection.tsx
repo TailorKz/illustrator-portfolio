@@ -1,9 +1,28 @@
 import { motion } from "framer-motion";
-import { TornEdge } from "./TornEdge";
+import letterA from "../assets/letters/a.webp";
+import letterE from "../assets/letters/e.webp";
+import letterN from "../assets/letters/n.webp";
+import letterP from "../assets/letters/p.webp";
+import letterT from "../assets/letters/t.webp";
+import letterY from "../assets/letters/y.webp";
 import profile from "../assets/profile.webp";
+import { useLanguage } from "../contexts/LanguageContext";
 import { FloatingIcon } from "./FloatingIcon";
+import { TornEdge } from "./TornEdge";
+
+const PATYNETE = [
+  letterP,
+  letterA,
+  letterT,
+  letterY,
+  letterN,
+  letterE,
+  letterT,
+  letterE,
+];
 
 function SectionTitle() {
+  const { t } = useLanguage();
   return (
     <motion.div
       initial={{ opacity: 0, x: -24 }}
@@ -12,7 +31,9 @@ function SectionTitle() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="relative inline-block mb-8"
     >
-      <h2 className="font-hand text-4xl text-ink md:text-6xl">About me</h2>
+      <h2 className="font-hand text-6xl md:text-7xl text-ink">
+        {t.about.title}
+      </h2>
       <motion.svg
         className="absolute -bottom-2 left-0 h-3 w-[85%]"
         viewBox="0 0 200 16"
@@ -33,26 +54,84 @@ function SectionTitle() {
     </motion.div>
   );
 }
-
+function LetterName() {
+  return (
+    <motion.div
+      role="img"
+      aria-label="Patynete"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4 }}
+      className="flex justify-center items-end gap-0.5 sm:gap-1 md:gap-1.5 mt-10"
+    >
+      {PATYNETE.map((src, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 40, rotate: i % 2 === 0 ? -8 : 8 }}
+          whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{
+            delay: 0.1 + i * 0.08,
+            type: "spring",
+            stiffness: 260,
+            damping: 14,
+          }}
+          className="h-7 sm:h-8 md:h-10"
+        >
+          <motion.img
+            src={src}
+            alt=""
+            animate={{ y: [0, -10, 0] }}
+            transition={{
+              duration: 1.8 + (i % 3) * 0.3,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1 + i * 0.15,
+            }}
+            className="h-full w-auto object-contain drop-shadow-md select-none pointer-events-none"
+          />
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}
 export function AboutSection() {
+  const { t } = useLanguage();
+
   return (
     <section
       id="about"
       className="relative flex w-full min-h-screen flex-col items-center bg-[#fffedf] pb-24 pt-16 md:pt-24"
     >
-      {/* Efeito de Papel/Cartaz sobre a cor Amarelo Clarinho */}
+      {/* Efeito de Papel/Cartaz */}
       <div
         className="paper-grain absolute inset-0 z-0 pointer-events-none opacity-60"
         aria-hidden="true"
       />
- {/* ELEMENTOS FLUTUANTES NO FUNDO */}
-      <FloatingIcon top="15%" right="5%" duration={6} rotate={15} driftX={-10} className="hidden md:block z-0 opacity-60">
+
+      {/* ELEMENTOS FLUTUANTES NO FUNDO */}
+      <FloatingIcon
+        top="15%"
+        right="5%"
+        duration={6}
+        rotate={15}
+        driftX={-10}
+        className="hidden md:block z-0 opacity-60"
+      >
         <img src="/borboleta.webp" alt="" className="w-20" />
       </FloatingIcon>
-      <FloatingIcon bottom="25%" left="2%" duration={8} rotate={-10} driftX={10} className="hidden lg:block z-0 opacity-50">
+      <FloatingIcon
+        bottom="25%"
+        left="2%"
+        duration={8}
+        rotate={-10}
+        driftX={10}
+        className="hidden lg:block z-0 opacity-50"
+      >
         <img src="/florespequenas.webp" alt="" className="w-24" />
       </FloatingIcon>
-      
+
       <div className="relative z-10 mx-auto w-full max-w-6xl px-4 flex flex-col">
         {/* PARTE SUPERIOR: Texto/Título (Esquerda) e Foto (Direita) */}
         <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
@@ -67,25 +146,23 @@ export function AboutSection() {
               className="flex flex-col gap-5 font-sans text-lg text-ink-soft leading-relaxed"
             >
               <p>
-                Olá! Sou{" "}
+                {t.about.conteninicio}{" "}
                 <strong className="text-ink font-bold">
                   Patrícia Philippsen Gabriel,{" "}
                 </strong>
-                também conhecida como @patynete nas redes sociais, tenho 21 anos
-                e sou de Santa Catarina. A paixão pela arte sempre caminhou
-                junto comigo desde a infância e as ideias nunca estiveram em
-                falta, criatividade e amor são palavras chaves para minhas
-                inspirações e projetos!
+                {t.about.content1}
               </p>
               <p>
-                No meu portifólio você verá trabalhos diversos, como em:
-                <strong className="text-ink font-bold"> Ilustração Digital, Aquarela, Tinta acrílica, Tinta à óleo,
-                Lápis de cor, Marcadores e Grafite.</strong> <br/><br/>Atualmente estou cursando
-                Ilustração e Concept Art pela EBAC, onde busco evoluir e
-                aperfeiçoar em todos os âmbitos possíveis para que possa
-                entregar o melhor de mim em minhas obras.
+                {t.about.content2}
+                <strong className="text-ink font-bold">
+                  {" "}
+                  {t.about.content2_1}
+                </strong>{" "}
+                <br />
+                <br />
+                {t.about.content3}
               </p>
-              <p>Será um prazer trabalharmos juntos para criar algo incrível! ♡</p>
+              <p>{t.about.content4}</p>
             </motion.div>
           </div>
 
@@ -110,8 +187,6 @@ export function AboutSection() {
 
             <div className="bg-white p-4 pb-16 shadow-[0_10px_40px_rgba(58,46,46,0.15)] rounded-sm relative z-10">
               <div className="aspect-[3/4] w-full bg-zinc-200 overflow-hidden relative flex items-center justify-center border border-black/5">
-                {/* PLACEHOLDER: Quando tiver a foto, comente este span e habilite a tag img abaixo */}
-
                 <img
                   src={profile}
                   alt="Profile"
@@ -119,7 +194,7 @@ export function AboutSection() {
                 />
               </div>
               <p className="absolute bottom-5 left-0 w-full text-center font-hand text-3xl text-ink-soft">
-                Me, 2026
+                {t.about.me}
               </p>
             </div>
 
@@ -131,18 +206,30 @@ export function AboutSection() {
             />
           </motion.div>
         </div>
-<div className="w-full flex justify-center mt-20 mb-8 opacity-40">
-          <svg className="w-full max-w-2xl h-6 overflow-visible" viewBox="0 0 400 20" fill="none" stroke="var(--color-ink-soft)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" preserveAspectRatio="none">
-            <motion.path 
+
+        {/* LINHA PONTILHADA DE SEPARAÇÃO */}
+        <div className="w-full flex justify-center mt-20 mb-8 opacity-40">
+          <svg
+            className="w-full max-w-2xl h-6 overflow-visible"
+            viewBox="0 0 400 20"
+            fill="none"
+            stroke="var(--color-ink-soft)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            preserveAspectRatio="none"
+          >
+            <motion.path
               initial={{ pathLength: 0 }}
               whileInView={{ pathLength: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1, ease: "easeInOut" }}
-              d="M10 10 Q 40 2 70 12 T 130 8 T 190 12 T 250 8 T 310 12 T 390 10" 
+              d="M10 10 Q 40 2 70 12 T 130 8 T 190 12 T 250 8 T 310 12 T 390 10"
               strokeDasharray="6 6"
             />
           </svg>
         </div>
+
         {/* PARTE INFERIOR: Cursos e Experiência Divididos */}
         <div className="mt-24 md:mt-32 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20">
           {/* CURSOS */}
@@ -153,11 +240,10 @@ export function AboutSection() {
             transition={{ delay: 0.3, duration: 0.6 }}
           >
             <h3 className="font-hand text-4xl text-pink-500 mb-8 flex items-center gap-3">
-              <span className="text-3xl">🎓</span> Cursos
+              <span className="text-3xl">🎓</span> {t.about.cursos}
             </h3>
             <div className="flex flex-col gap-10 relative border-l-2 border-pink-200 ml-3 pl-8">
               <div className="relative">
-                {/* O Bolinho da Timeline que tem o fundo exatamente igual a página para parecer vazado */}
                 <div className="absolute -left-[41px] top-1 h-4 w-4 rounded-full border-4 border-[#fffedf] bg-pink-400" />
                 <h4 className="font-sans font-bold text-ink text-xl">
                   Concept Art
@@ -166,20 +252,20 @@ export function AboutSection() {
                   EBAC - Escola Britânica de Artes Criativas e Tecnologia • 2025
                 </p>
                 <p className="font-sans text-ink-soft leading-relaxed">
-                  Formação voltada para o desenvolvimento de habilidades técnicas e criativas na criação de artes conceituais para games, animações e produções audiovisuais. 
+                  {t.about.concepttexto}
                 </p>
               </div>
 
               <div className="relative">
                 <div className="absolute -left-[41px] top-1 h-4 w-4 rounded-full border-4 border-[#fffedf] bg-pink-400" />
                 <h4 className="font-sans font-bold text-ink text-xl">
-                  Ilustrador Profissional
+                  {t.about.ilustrador}
                 </h4>
                 <p className="font-sans text-sm text-pink-500 font-bold mb-2">
                   EBAC - Escola Britânica de Artes Criativas e Tecnologia • 2025
                 </p>
                 <p className="font-sans text-ink-soft leading-relaxed">
-                  Formação completa voltada para o mercado de ilustração, com foco em desenvolvimento de estilo próprio, técnicas tradicionais e digitais, e aplicação da ilustração em diferentes segmentos como editorial, publicitário, literário e artístico.
+                  {t.about.ilustradortexto}
                 </p>
               </div>
             </div>
@@ -193,41 +279,40 @@ export function AboutSection() {
             transition={{ delay: 0.4, duration: 0.6 }}
           >
             <h3 className="font-hand text-4xl text-butter-deep mb-8 flex items-center gap-3">
-              <span className="text-3xl">💼</span> Experiência Profissional
+              <span className="text-3xl">💼</span> {t.about.experiencia}
             </h3>
             <div className="flex flex-col gap-10 relative border-l-2 border-butter-deep/40 ml-3 pl-8">
-            <div className="relative">
+              <div className="relative">
                 <div className="absolute -left-[41px] top-1 h-4 w-4 rounded-full border-4 border-[#fffedf] bg-butter-deep" />
                 <h4 className="font-sans font-bold text-ink text-xl">
                   Designer
                 </h4>
                 <p className="font-sans text-sm text-butter-deep font-bold mb-2">
-                  Taggy Contact • 10/2025 - Atualmente
+                  {t.about.experienciaano}
                 </p>
                 <p className="font-sans text-ink-soft leading-relaxed">
-                  Faço parte do time de criação de artes da empresa, desenvolvo protótipos juntamente dos clientes com mockups pra apresentação e atendimento ao público home office.
+                  {t.about.experienciatexto1}
                 </p>
               </div>
+
               <div className="relative">
                 <div className="absolute -left-[41px] top-1 h-4 w-4 rounded-full border-4 border-[#fffedf] bg-butter-deep" />
                 <h4 className="font-sans font-bold text-ink text-xl">
-                  Ilustradora Freelancer
+                  {t.about.experienciatitulo2}
                 </h4>
                 <p className="font-sans text-sm text-butter-deep font-bold mb-2">
-                  Autônomo • 2021 - Atualmente
+                  {t.about.experiencia2ano}
                 </p>
                 <p className="font-sans text-ink-soft leading-relaxed">
-                  Atuo como ilustradora freelancer, criando imagens que contam histórias, especialmente através de personagens originais (OCs), uma das áreas que mais tenho explorado e desenvolvido atualmente, além de ilustrações digitais para estampas e capas de livros até projetos de identidade visual, como logotipos com elementos ilustrados. 
+                  {t.about.experienciatexto2}
                 </p>
               </div>
-
-              
             </div>
           </motion.div>
         </div>
+        <LetterName />
       </div>
 
-      {/* Adicionei a transição para a próxima tela de Contato! */}
       <TornEdge bottomColor="#e7ffe9" />
     </section>
   );
