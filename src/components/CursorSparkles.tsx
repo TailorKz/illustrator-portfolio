@@ -8,11 +8,13 @@ type Sparkle = {
   hue: "butter" | "pink";
 };
 
+const SPARKLE_LIFETIME_MS = 700; // keep this in sync with the CSS animation duration below
 let sparkleId = 0;
 
 export function CursorSparkles() {
   const [sparkles, setSparkles] = useState<Sparkle[]>([]);
   const lastSpawn = useRef(0);
+  const timeouts = useRef<Set<ReturnType<typeof setTimeout>>>(new Set());
 
   useEffect(() => {
     const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
@@ -24,32 +26,41 @@ export function CursorSparkles() {
       if (now - lastSpawn.current < 90) return;
       lastSpawn.current = now;
 
+      const id = sparkleId++;
       setSparkles((prev) => [
-        ...prev.slice(-14), // no máx. ~15 brilhos vivos ao mesmo tempo
+        ...prev.slice(-14),
         {
-          id: sparkleId++,
+          id,
           x: e.clientX,
           y: e.clientY,
           size: 5 + Math.random() * 5,
           hue: Math.random() > 0.35 ? "butter" : "pink",
         },
       ]);
+
+      // Each sparkle removes itself on a fixed timer. This is the source
+      // of truth for cleanup — it doesn't depend on the mouse moving again
+      // or on the CSS animation actually firing an "animationend" event.
+      const timeoutId = setTimeout(() => {
+        setSparkles((prev) => prev.filter((s) => s.id !== id));
+        timeouts.current.delete(timeoutId);
+      }, SPARKLE_LIFETIME_MS);
+      timeouts.current.add(timeoutId);
     }
 
     window.addEventListener("mousemove", handleMove);
-    return () => window.removeEventListener("mousemove", handleMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      timeouts.current.forEach(clearTimeout);
+      timeouts.current.clear();
+    };
   }, []);
-
-  function remove(id: number) {
-    setSparkles((prev) => prev.filter((s) => s.id !== id));
-  }
 
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[9999]">
       {sparkles.map((s) => (
         <span
           key={s.id}
-          onAnimationEnd={() => remove(s.id)}
           className={`sparkle-trail absolute rounded-full ${
             s.hue === "butter" ? "bg-butter" : "bg-pink-soft"
           }`}

@@ -123,7 +123,7 @@ export function ContactSection() {
 
             {/* Cartão E-mail */}
             <motion.a
-              href="mailto:seu_email@gmail.com"
+              href="mailto:patriciapg.ipo@gmail.com"
               initial={{ rotate: -2 }}
               whileHover={{ rotate: 0, scale: 1.03, y: -3 }}
               className="group relative flex items-center gap-4 bg-white p-4 pl-5 rounded-md shadow-md border border-black/5"
